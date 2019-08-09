@@ -74,29 +74,18 @@ class Principal(QMainWindow):
         
 #%%
     def cargarSenial(self):
+        self.list3.clear()
         self.nombreSenial= QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
         self.rutas = self.nombreSenial[0]
-        if(len(self.rutas)==1):
-            data = pd.read_csv(self.rutas[0],sep='\t', header=None)
-            lineas= data.shape[1]
-            if(lineas == 1):
-                self.y = np.asarray(data[0])
-            elif(lineas == 2):
-                self.y = np.asarray(data[1])
-            self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
-            self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
-            # Y1 axis   
-            self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
-            self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
-            names=str.split(self.rutas[0],"/")
+        
+        self.dialog = Dialog(str(len(self.rutas))+' Files(s) loaded(s)','abrir.png')
+        self.dialog.show()
+        for i in range(len(self.rutas)):
+            names=str.split(self.rutas[i],"/")
             t=len(names)
-            self.nombre= names[t-1]
-            self.plot1.setTitle(self.nombre)
-            self.plot1.plot(self.y,pen='k')
-        else:
-            self.dialog = Dialog(str(len(self.rutas))+' Files(s) loaded(s)','abrir.png')
-            self.dialog.show()
-            self.plot1.clear()
+            nombre= names[t-1]
+            self.list3.addItem(nombre)
+        self.plot1.clear()
             
         if(len(self.rutas)==0):
             self.btn1.setEnabled(False)
@@ -132,12 +121,33 @@ class Principal(QMainWindow):
             self.int_max_clique = 1 
         else: 
             self.int_max_clique = 0
+    def plots(self):
+        self.plot1.clear()
+        i= self.list3.currentIndex()
+        
+        data = pd.read_csv(self.rutas[i],sep='\t', header=None)
+        lineas= data.shape[1]
+        if(lineas == 1):
+            self.y = np.asarray(data[0])
+        elif(lineas == 2):
+            self.y = np.asarray(data[1])
+        self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
+        self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
+        # Y1 axis   
+        self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
+        self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
+        names=str.split(self.rutas[i],"/")
+        t=len(names)
+        nombre= names[t-1]
+        self.plot1.setTitle(nombre)
+        self.plot1.plot(self.y,pen='k')
+        
 #%% 
     def __init__(self):
         super().__init__()
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('NetWX')
-        self.setWindowIcon(QIcon("1.JPG"))
+        self.setWindowIcon(QIcon("icon.ico"))
         self.resize(700, 400)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
@@ -221,7 +231,7 @@ class Principal(QMainWindow):
         self.txt1.setEnabled(True)
         self.txt1.setStyleSheet("font-size: 12px")
                 
-        lbl_lista1 = QLabel("Graph Layout:")
+        lbl_lista1 = QLabel("Graph layout:")
         lbl_lista1.setStyleSheet("font-size: 12px")
         
         self.list1 = QComboBox()
@@ -234,7 +244,10 @@ class Principal(QMainWindow):
         self.list2.addItem("10%")
         self.list2.addItem("1%")
         
-        lbl_check1 = QLabel("Make max clique graph")
+        self.list3 = QComboBox()
+        self.list3.currentIndexChanged.connect(self.plots)
+        
+        lbl_check1 = QLabel("Make maxclique graph")
         lbl_check1.setStyleSheet("font-size: 12px")
         
         self.check1 = QCheckBox()
@@ -243,7 +256,10 @@ class Principal(QMainWindow):
         self.lbl_num_files = QLabel("Files loaded: ")
         self.lbl_num_files.setStyleSheet("font-size: 12px")
         
-        self.btn1 = QPushButton('Visibility Graph')
+        lbl_file = QLabel("File: ")
+        lbl_file.setStyleSheet("font-size: 12px")
+        
+        self.btn1 = QPushButton('Visibility graph')
         self.btn1.clicked.connect(self.visibility_graph_button)
         self.btn1.setStyleSheet("font-size: 12px")
         self.btn1.setEnabled(False)
@@ -260,7 +276,9 @@ class Principal(QMainWindow):
         #################################################################
         ##     Colocar elementos en layout botones
         #################################################################
+        
         results.addRow(self.lbl_num_files)
+        results.addRow(lbl_file,self.list3)
         results.addRow(lbl2, self.list2)
         results.addRow(lbl_lista1,self.list1)
         results.addRow(lbl_check1,self.check1)

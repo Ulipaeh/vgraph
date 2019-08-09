@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import (QWidget, QPushButton, QFormLayout, QLineEdit, QSplitter, QVBoxLayout, QMainWindow,QFileDialog, QLabel)
+from PyQt5.QtWidgets import (QWidget, QPushButton, QApplication , QFormLayout, QLineEdit, QSplitter, QVBoxLayout, QMainWindow,QFileDialog, QLabel)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 import pyqtgraph as pg  
 import numpy as np
 import pandas as pd
+import sys
 #%%
 class CutSignals(QMainWindow):
 
@@ -16,23 +17,24 @@ class CutSignals(QMainWindow):
         self.btnIniciar.setEnabled(True)
         self.plot1.clear()
         self.nombreSenial= QFileDialog.getOpenFileName(None, 'Open file', '/home')
-        print(self.nombreSenial)
-        datos = pd.read_csv(self.nombreSenial[0],sep='\t', header=None)
-        lineas= datos.shape[1]
-        if(lineas == 1):
-            self.y = np.asarray(datos[0])
-        elif(lineas == 2):
-            self.y = np.asarray(datos[1])
-        self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
-        self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
-        # Y1 axis   
-        self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
-        self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
-        names=str.split(self.nombreSenial[0],"/")
-        t=len(names)
-        self.nombre= names[t-1]
-        self.plot1.setTitle(self.nombre)
-        self.plot1.plot(self.y,pen='k')
+        if(len(self.nombreSenial[0])!=0):
+            print(self.nombreSenial)
+            datos = pd.read_csv(self.nombreSenial[0],sep='\t', header=None)
+            lineas= datos.shape[1]
+            if(lineas == 1):
+                self.y = np.asarray(datos[0])
+            elif(lineas == 2):
+                self.y = np.asarray(datos[1])
+            self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
+            self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
+            # Y1 axis   
+            self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
+            self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
+            names=str.split(self.nombreSenial[0],"/")
+            t=len(names)
+            self.nombre= names[t-1]
+            self.plot1.setTitle(self.nombre)
+            self.plot1.plot(self.y,pen='k')
 
 #%%
     def enabledButtons(self):
@@ -98,21 +100,21 @@ class CutSignals(QMainWindow):
         self.lr = pg.LinearRegionItem([0,6000])
         self.valorContador = QLabel('')
         
-        btnLoadSig = QPushButton('Load Signal')
+        btnLoadSig = QPushButton('Load signal')
         btnLoadSig.clicked.connect(self.cargarSenial)
         btnLoadSig.setStyleSheet("font-size: 12px")
         
-        self.btnIniciar = QPushButton('Start Segmentation')
+        self.btnIniciar = QPushButton('Start segmentation')
         self.btnIniciar.clicked.connect(self.enabledButtons)
         self.btnIniciar.setEnabled(False)
         self.btnIniciar.setStyleSheet("font-size: 12px")
 
-        self.btnAdd = QPushButton('Add Segment')
+        self.btnAdd = QPushButton('Add segment')
         self.btnAdd.clicked.connect(self.addInterval)
         self.btnAdd.setEnabled(False)
         self.btnAdd.setStyleSheet("font-size: 12px")
         
-        txtnumseg  = QLabel("Segment Number:")
+        txtnumseg  = QLabel("Segment num:")
         txtnumseg.setStyleSheet("font-size: 12px")
         self.txtns = QLineEdit("")
         self.txtns.setEnabled(False)
@@ -153,3 +155,8 @@ class CutSignals(QMainWindow):
         contain.addWidget(gra)
         contain.addWidget(bot)
         self.setCentralWidget(contain)
+        
+if __name__ == '__cutSignals__':
+    app = QApplication(sys.argv)
+    ex = CutSignals()
+    sys.exit(app.exec_())

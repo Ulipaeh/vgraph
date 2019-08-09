@@ -41,12 +41,15 @@ def visibility_graph(ruta,frec):
     plt.bar(range (len( vals )),vals ,width =0.2 ,align ="center")
     plt.savefig(names[0]+nam[0]+'_grafica_de_barras.png')
     plt.close()
+
     eds = []
     for a in range(len(vals)):
         for b in range(a+1,len(vals)):
             if is_visible(vals,a,b):
                 eds.append((a,b))
     P = nx.Graph(eds)
+    vals = pd.DataFrame(vals)
+    vals.to_csv(names[0]+'_redu_freq_'+nam[0]+'.txt', index = False)
     return(P)
                 
            
