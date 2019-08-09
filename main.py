@@ -80,6 +80,7 @@ class Principal(QMainWindow):
         
         self.dialog = Dialog(str(len(self.rutas))+' Files(s) loaded(s)','abrir.png')
         self.dialog.show()
+        self.list3.addItem('')
         for i in range(len(self.rutas)):
             names=str.split(self.rutas[i],"/")
             t=len(names)
@@ -123,7 +124,7 @@ class Principal(QMainWindow):
             self.int_max_clique = 0
     def plots(self):
         self.plot1.clear()
-        i= self.list3.currentIndex()
+        i= self.list3.currentIndex()-1
         
         data = pd.read_csv(self.rutas[i],sep='\t', header=None)
         lineas= data.shape[1]
@@ -208,10 +209,10 @@ class Principal(QMainWindow):
         self.distance_measures_action.setStatusTip('Graph diameter, radius, eccentricity and other properties')
         menu_algorithms.addAction(self.distance_measures_action)
         
-        self.grade_max_action = QAction('Grade max',self ,checkable=True)
+        self.grade_max_action = QAction('Maximum Dregree',self ,checkable=True)
         self.grade_max_action.triggered.connect(self.state_check_4)
-        self.grade_max_action.setToolTip('Graph grade max')
-        self.grade_max_action.setStatusTip('Graph grade_max')
+        self.grade_max_action.setToolTip('Graph Maximum dregree')
+        self.grade_max_action.setStatusTip('Graph Maximum dregree')
         menu_algorithms.addAction(self.grade_max_action)
         
 
