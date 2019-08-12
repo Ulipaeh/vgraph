@@ -68,7 +68,7 @@ class Principal(QMainWindow):
         if(self.int_4 == 1):
             Grade_Max(self.rutas, self.int_max_clique, self.list2.currentIndex())
             
-        self.dialogo_done = Dialog('Done!','listo.png')
+        self.dialogo_done = Dialog('Done!','done.png')
         self.dialogo_done.show()
         
         
@@ -78,7 +78,7 @@ class Principal(QMainWindow):
         self.nombreSenial= QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
         self.rutas = self.nombreSenial[0]
         
-        self.dialog = Dialog(str(len(self.rutas))+' Files(s) loaded(s)','abrir.png')
+        self.dialog = Dialog(str(len(self.rutas))+' Files(s) loaded(s)','open.png')
         self.dialog.show()
         self.list3.addItem('')
         for i in range(len(self.rutas)):
@@ -178,14 +178,14 @@ class Principal(QMainWindow):
         menu_archivo = barra_menu.addMenu('&File')
         menu_algorithms = barra_menu.addMenu('&Algorithms')
   
-        abrir_action = QAction(QIcon('abrir.png'), 'Open File(s)', self)
+        abrir_action = QAction(QIcon('open.png'), 'Open File(s)', self)
         abrir_action.setToolTip('Open File(s)')
         abrir_action.setStatusTip('Open File(s)')
         abrir_action.triggered.connect(self.cargarSenial)
         barra_herr.addAction(abrir_action)
         menu_archivo.addAction(abrir_action)
         
-        cortar_action = QAction(QIcon('cortar.png'), 'Cut Signal', self)
+        cortar_action = QAction(QIcon('cut.png'), 'Cut Signal', self)
         cortar_action.setToolTip('Cut Signal')
         cortar_action.setStatusTip('Cut Signal')
         cortar_action.triggered.connect(self.cutSignal_boton)

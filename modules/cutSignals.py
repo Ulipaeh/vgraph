@@ -1,10 +1,37 @@
-from PyQt5.QtWidgets import (QWidget, QPushButton, QApplication , QFormLayout, QLineEdit, QSplitter, QVBoxLayout, QMainWindow,QFileDialog, QLabel)
+from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QPushButton, QApplication , QFormLayout, QLineEdit, QSplitter, QVBoxLayout, QMainWindow,QFileDialog, QLabel)
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QIntValidator
 import pyqtgraph as pg  
 import numpy as np
 import pandas as pd
 import sys
+
+class Dialog(QDialog):
+    def __init__(self, label, icon):
+        super().__init__()
+        lay = QVBoxLayout(self)
+        
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
+
+        self.icon = icon
+        self.setWindowIcon(QIcon(self.icon))
+        
+        self.setWindowTitle('Message')
+        self.label = label
+
+        lbl = QLabel(self.label)
+
+        dialogbutton = QDialogButtonBox()
+        dialogbutton.setOrientation(Qt.Horizontal)
+        dialogbutton.setStandardButtons(QDialogButtonBox.Ok)
+
+        lay.addWidget(lbl)
+        lay.addWidget(dialogbutton)
+
+        dialogbutton.accepted.connect(self.accept)
+        dialogbutton.rejected.connect(self.reject)
+
+
 #%%
 class CutSignals(QMainWindow):
 
@@ -45,22 +72,27 @@ class CutSignals(QMainWindow):
         
 #%%      
     def addInterval(self):
-        self.contador  = int(self.txtns.text())
-        regionSelected = self.lr.getRegion()
-        ini = int(regionSelected[0])
-        fin = int(regionSelected[1])
-        self.duracion.append(self.y[ini:fin])
-        self.duracion=np.transpose(self.duracion)
-        df = pd.DataFrame(self.duracion)
-        names = str.split(self.nombreSenial[0],self.nombre)
-        nam   = str.split(self.nombre,'.')
-        df.to_csv(names[0]+nam[0]+'_seg_'+str(self.contador)+'.txt',index=False,sep='\t', header = None, mode = 'w') 
-        self.duracion = []        
-        linea1= pg.InfiniteLine(pos= ini, angle=90, movable=False)
-        linea2= pg.InfiniteLine(pos= fin, angle=90, movable=False)
-        self.plot1.addItem(linea1)
-        self.plot1.addItem(linea2)
-        self.lr.setRegion([fin,fin+6000])
+        if(self.txtns.text()==None):
+            self.dialogo = Dialog('A segment number must be entered','error.png')
+            self.dialogo.show()
+        else:
+            self.contador  = int(self.txtns.text())
+            regionSelected = self.lr.getRegion()
+            ini = int(regionSelected[0])
+            fin = int(regionSelected[1])
+            self.duracion.append(self.y[ini:fin])
+            self.duracion=np.transpose(self.duracion)
+            df = pd.DataFrame(self.duracion)
+            names = str.split(self.nombreSenial[0],self.nombre)
+            nam   = str.split(self.nombre,'.')
+            df.to_csv(names[0]+nam[0]+'_seg_'+str(self.contador)+'.txt',index=False,sep='\t', header = None, mode = 'w') 
+            self.duracion = []        
+            linea1= pg.InfiniteLine(pos= ini, angle=90, movable=False)
+            linea2= pg.InfiniteLine(pos= fin, angle=90, movable=False)
+            self.plot1.addItem(linea1)
+            self.plot1.addItem(linea2)
+            self.lr.setRegion([fin,fin+6000])
+
 
 #%%
     def reboot(self):
@@ -71,7 +103,7 @@ class CutSignals(QMainWindow):
     def initUI(self):
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('Cut Signal')
-        self.setWindowIcon(QIcon("cortar.png"))
+        self.setWindowIcon(QIcon("cut.png"))
         self.resize(700, 400)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
@@ -114,9 +146,16 @@ class CutSignals(QMainWindow):
         self.btnAdd.setEnabled(False)
         self.btnAdd.setStyleSheet("font-size: 12px")
         
+        
+
         txtnumseg  = QLabel("Segment num:")
         txtnumseg.setStyleSheet("font-size: 12px")
-        self.txtns = QLineEdit("")
+        
+        
+        validator = QIntValidator(1, 100, self)        
+        self.txtns = QLineEdit(self)
+        self.txtns.setValidator(validator)
+        self.txtns.setText('1')
         self.txtns.setEnabled(False)
         self.txtns.setStyleSheet("font-size: 12px")
         
