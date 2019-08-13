@@ -1,7 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 12 20:24:20 2019
+
+@author: Ulises
+"""
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QMainWindow, QFileDialog, QLabel, QToolBar, QAction, QApplication, QLineEdit, QCheckBox ,
-                              QWidget, QComboBox, QSplitter, QDialog, QDialogButtonBox, QPushButton, QVBoxLayout, QStatusBar, QFormLayout, QMenuBar)
+                              QWidget, QComboBox, QSplitter, QPushButton, QVBoxLayout, QStatusBar, QFormLayout, QMenuBar)
 from PyQt5.QtCore import Qt
+from modules.Dialog import Dialog
 from modules.cutSignals import CutSignals
 from modules.visibility_graph import visibility_graph
 from modules.Plot import Plot
@@ -15,31 +22,6 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 import pyqtgraph as pg
-
-class Dialog(QDialog):
-    def __init__(self, label, icon):
-        super().__init__()
-        lay = QVBoxLayout(self)
-        
-        self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
-
-        self.icon = icon
-        self.setWindowIcon(QIcon(self.icon))
-        
-        self.setWindowTitle('Message')
-        self.label = label
-
-        lbl = QLabel(self.label)
-
-        dialogbutton = QDialogButtonBox()
-        dialogbutton.setOrientation(Qt.Horizontal)
-        dialogbutton.setStandardButtons(QDialogButtonBox.Ok)
-
-        lay.addWidget(lbl)
-        lay.addWidget(dialogbutton)
-
-        dialogbutton.accepted.connect(self.accept)
-        dialogbutton.rejected.connect(self.reject)
 
 class Principal(QMainWindow):
     def cutSignal_boton(self):
@@ -70,7 +52,6 @@ class Principal(QMainWindow):
             
         self.dialogo_done = Dialog('Done!','done.png')
         self.dialogo_done.show()
-        
         
 #%%
     def cargarSenial(self):

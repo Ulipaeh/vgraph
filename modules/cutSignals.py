@@ -1,38 +1,19 @@
-from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QPushButton, QApplication , QFormLayout, QLineEdit, QSplitter, QVBoxLayout, QMainWindow,QFileDialog, QLabel)
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 12 20:24:20 2019
+
+@author: Ulises
+"""
+from PyQt5.QtWidgets import (QWidget, QPushButton, QApplication , QFormLayout, QLineEdit, QSplitter, QVBoxLayout, QMainWindow,QFileDialog, QLabel)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QIntValidator
+from modules.Dialog import Dialog
+
 import pyqtgraph as pg  
 import numpy as np
 import pandas as pd
 import sys
 
-class Dialog(QDialog):
-    def __init__(self, label, icon):
-        super().__init__()
-        lay = QVBoxLayout(self)
-        
-        self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
-
-        self.icon = icon
-        self.setWindowIcon(QIcon(self.icon))
-        
-        self.setWindowTitle('Message')
-        self.label = label
-
-        lbl = QLabel(self.label)
-
-        dialogbutton = QDialogButtonBox()
-        dialogbutton.setOrientation(Qt.Horizontal)
-        dialogbutton.setStandardButtons(QDialogButtonBox.Ok)
-
-        lay.addWidget(lbl)
-        lay.addWidget(dialogbutton)
-
-        dialogbutton.accepted.connect(self.accept)
-        dialogbutton.rejected.connect(self.reject)
-
-
-#%%
 class CutSignals(QMainWindow):
 
     def __init__(self):
@@ -73,8 +54,8 @@ class CutSignals(QMainWindow):
 #%%      
     def addInterval(self):
         if(self.txtns.text()==None):
-            self.dialogo = Dialog('A segment number must be entered','error.png')
-            self.dialogo.show()
+            self.dialogo_error = Dialog('A segment number must be entered','error.png')
+            self.dialogo_error.show()
         else:
             self.contador  = int(self.txtns.text())
             regionSelected = self.lr.getRegion()
@@ -151,6 +132,9 @@ class CutSignals(QMainWindow):
         txtnumseg  = QLabel("Segment num:")
         txtnumseg.setStyleSheet("font-size: 12px")
         
+        self.lbl_cursor  = QLabel()
+        self.lbl_cursor.setStyleSheet("font-size: 12px")
+        
         
         validator = QIntValidator(1, 100, self)        
         self.txtns = QLineEdit(self)
@@ -177,6 +161,7 @@ class CutSignals(QMainWindow):
         botones.addWidget(self.btnIniciar)
         botones.addWidget(self.btnAdd)
         results.addRow(txtnumseg, self.txtns)
+        results.addRow(self.lbl_cursor)
         botones.addLayout(results)        
         #################################################################
         ##     Colocar elementos en layout graficos
