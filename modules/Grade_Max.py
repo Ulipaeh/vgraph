@@ -14,7 +14,7 @@ def Grade_Max(rutas, int_max_clique, frec):
         grad_max.append(grado_max(P))
     
     grad_max = pd.DataFrame(grad_max)
-    grad_max.to_csv(names[0]+"_grade_max.txt", sep = '\t',header = None,index = False)
+    grad_max.to_csv(names[0]+"max_dregree(visibility_graph).txt", sep = '\t',header = None,index = False)
            
         
     if(int_max_clique==1):
@@ -25,4 +25,4 @@ def Grade_Max(rutas, int_max_clique, frec):
             p_grad_max.append(grado_max(p))
                 
         p_grad_max = pd.DataFrame(p_grad_max)
-        p_grad_max.to_csv(names[0]+"_p_grade_max.txt", sep = '\t',header = None,index = False)
+        p_grad_max.to_csv(names[0]+"max_degree(maxclique_graph).txt", sep = '\t',header = None,index = False)

@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+
 def is_visible (y ,a ,b ):
     isit = True
     c = a +1
@@ -33,13 +36,15 @@ def visibility_graph(ruta,frec):
     vals = [float(y[1])]
     for j in range(int(len(y))):
         new = vals[-1]
-        vals.append(float(y[j])) 
+        vals.append(float(y[j]))
+    
     names = str.split(ruta,nombre)
     nam   = str.split(nombre,'.')
+  
     plt.figure()
     plt.grid(True)
     plt.bar(range (len( vals )),vals ,width =0.2 ,align ="center")
-    plt.savefig(names[0]+nam[0]+'_grafica_de_barras.png')
+    plt.savefig(names[0] + nam[0]+'_bar_graph.jpg',dpi=300)
     plt.close()
 
     eds = []
@@ -48,8 +53,8 @@ def visibility_graph(ruta,frec):
             if is_visible(vals,a,b):
                 eds.append((a,b))
     P = nx.Graph(eds)
-    vals = pd.DataFrame(vals)
-    vals.to_csv(names[0]+'_redu_freq_'+nam[0]+'.txt', index = False)
+#    vals = pd.DataFrame(vals)
+#    vals.to_csv(names[0]+'_redu_freq_'+nam[0]+'.txt', index = False)
     return(P)
                 
            

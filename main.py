@@ -23,6 +23,7 @@ import pandas as pd
 import networkx as nx
 import pyqtgraph as pg
 
+
 class Principal(QMainWindow):
     def cutSignal_boton(self):
         self.cut_signal = CutSignals()
@@ -31,13 +32,14 @@ class Principal(QMainWindow):
         names=str.split(self.rutas[0],"/")
         t=len(names)
         self.nombre= names[t-1]
-        names = str.split(self.rutas[0],self.nombre)
+        names = str.split(self.rutas[0],self.nombre)      
         for i in range(len(self.rutas)):
             P = visibility_graph(self.rutas[i],self.list2.currentIndex())
-            Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.png')
+            Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.jpg')
             if(self.int_max_clique==1):
                 p = nx.make_max_clique_graph(P)
-                Plot(p,self.rutas[i],self.list1.currentIndex(),'_max_clique_graph.png')
+                Plot(p,self.rutas[i],self.list1.currentIndex(),'_maxclique_graph.jpg')
+       
         if(self.int_1 == 1):
             Cliques(self.rutas, self.int_max_clique, self.list2.currentIndex())
          
@@ -55,11 +57,13 @@ class Principal(QMainWindow):
         
 #%%
     def cargarSenial(self):
+        self.aux = False
         self.list3.clear()
+        self.plot1.clear()
         self.nombreSenial= QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
         self.rutas = self.nombreSenial[0]
         
-        self.dialog = Dialog(str(len(self.rutas))+' Files(s) loaded(s)','open.png')
+        self.dialog = Dialog(str(len(self.rutas))+' File(s) loaded','open.png')
         self.dialog.show()
         self.list3.addItem('')
         for i in range(len(self.rutas)):
@@ -67,7 +71,6 @@ class Principal(QMainWindow):
             t=len(names)
             nombre= names[t-1]
             self.list3.addItem(nombre)
-        self.plot1.clear()
             
         if(len(self.rutas)==0):
             self.btn1.setEnabled(False)
@@ -77,6 +80,7 @@ class Principal(QMainWindow):
             self.btn1.setEnabled(True)
             self.lbl_num_files.setStyleSheet("color : blue; ")
             self.lbl_num_files.setText("Files loaded: "+str(len(self.rutas)))
+        self.aux = True
 #%%
     def state_check_1(self):
         if(self.int_1 == 0):
@@ -104,33 +108,34 @@ class Principal(QMainWindow):
         else: 
             self.int_max_clique = 0
     def plots(self):
-        self.plot1.clear()
-        i= self.list3.currentIndex()-1
-        
-        data = pd.read_csv(self.rutas[i],sep='\t', header=None)
-        lineas= data.shape[1]
-        if(lineas == 1):
-            self.y = np.asarray(data[0])
-        elif(lineas == 2):
-            self.y = np.asarray(data[1])
-        self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
-        self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
-        # Y1 axis   
-        self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
-        self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
-        names=str.split(self.rutas[i],"/")
-        t=len(names)
-        nombre= names[t-1]
-        self.plot1.setTitle(nombre)
-        self.plot1.plot(self.y,pen='k')
-        
+        if(self.aux == True):
+            self.plot1.clear()
+            i= self.list3.currentIndex()-1
+            if(len(self.rutas)!=0):            
+                data = pd.read_csv(self.rutas[i],sep='\t', header=None)
+                lineas= data.shape[1]
+                if(lineas == 1):
+                    self.y = np.asarray(data[0])
+                elif(lineas == 2):
+                    self.y = np.asarray(data[1])
+                self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
+                self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
+                # Y1 axis   
+                self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
+                self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
+                names=str.split(self.rutas[i],"/")
+                t=len(names)
+                nombre= names[t-1]
+                self.plot1.setTitle(nombre)
+                self.plot1.plot(self.y,pen='k')
+            
 #%% 
     def __init__(self):
         super().__init__()
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('NetWX')
         self.setWindowIcon(QIcon("icon.ico"))
-        self.resize(700, 400)
+        self.resize(1225, 700)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
         ##     Definición de variables globales
@@ -144,6 +149,7 @@ class Principal(QMainWindow):
         self.int_3    = 0
         self.int_4    = 0
         self.int_max_clique = 0
+        self.aux = 0
         #################################################################
         ##     Barra de Herramientas
         #################################################################
@@ -207,14 +213,14 @@ class Principal(QMainWindow):
         ##     Elementos del layout botones
         #################################################################
         lbl2 = QLabel("Sampling frequency:")
-        lbl2.setStyleSheet("font-size: 12px")
+        lbl2.setStyleSheet("font-size: 18px")
         
         self.txt1 = QLineEdit("")
         self.txt1.setEnabled(True)
-        self.txt1.setStyleSheet("font-size: 12px")
+        self.txt1.setStyleSheet("font-size: 18px")
                 
         lbl_lista1 = QLabel("Graph layout:")
-        lbl_lista1.setStyleSheet("font-size: 12px")
+        lbl_lista1.setStyleSheet("font-size: 18px")
         
         self.list1 = QComboBox()
         self.list1.addItem("None")
@@ -230,28 +236,28 @@ class Principal(QMainWindow):
         self.list3.currentIndexChanged.connect(self.plots)
         
         lbl_check1 = QLabel("Make maxclique graph")
-        lbl_check1.setStyleSheet("font-size: 12px")
+        lbl_check1.setStyleSheet("font-size: 18px")
         
         self.check1 = QCheckBox()
         self.check1.stateChanged.connect(self.state_check_max_clique) 
         
         self.lbl_num_files = QLabel("Files loaded: ")
-        self.lbl_num_files.setStyleSheet("font-size: 12px")
+        self.lbl_num_files.setStyleSheet("font-size: 18px")
         
         lbl_file = QLabel("File: ")
-        lbl_file.setStyleSheet("font-size: 12px")
+        lbl_file.setStyleSheet("font-size: 18px")
         
         self.btn1 = QPushButton('Visibility graph')
         self.btn1.clicked.connect(self.visibility_graph_button)
-        self.btn1.setStyleSheet("font-size: 12px")
+        self.btn1.setStyleSheet("font-size: 18px")
         self.btn1.setEnabled(False)
         #################################################################
         ##     Elementos del layout graficos
         #################################################################
         self.plot1=pg.PlotWidget()
-        self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
+        self.plot1.setLabel('bottom',color='k', **{'font-size':'16pt'})
         self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
-        self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
+        self.plot1.setLabel('left',color='k', **{'font-size':'16pt'})
         self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
         self.plot1.showGrid(1,1,0.2)
         graficos.addWidget(self.plot1)

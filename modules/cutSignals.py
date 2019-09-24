@@ -33,10 +33,10 @@ class CutSignals(QMainWindow):
                 self.y = np.asarray(datos[0])
             elif(lineas == 2):
                 self.y = np.asarray(datos[1])
-            self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
+            self.plot1.setLabel('bottom',color='k', **{'font-size':'14pt'})
             self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
             # Y1 axis   
-            self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
+            self.plot1.setLabel('left',color='k', **{'font-size':'14pt'})
             self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
             names=str.split(self.nombreSenial[0],"/")
             t=len(names)
@@ -85,7 +85,7 @@ class CutSignals(QMainWindow):
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('Cut Signal')
         self.setWindowIcon(QIcon("cut.png"))
-        self.resize(700, 400)
+        self.resize(1225, 700)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
         ##     Definición de variables globales
@@ -115,45 +115,41 @@ class CutSignals(QMainWindow):
         
         btnLoadSig = QPushButton('Load signal')
         btnLoadSig.clicked.connect(self.cargarSenial)
-        btnLoadSig.setStyleSheet("font-size: 12px")
+        btnLoadSig.setStyleSheet("font-size: 18px")
         
         self.btnIniciar = QPushButton('Start segmentation')
         self.btnIniciar.clicked.connect(self.enabledButtons)
         self.btnIniciar.setEnabled(False)
-        self.btnIniciar.setStyleSheet("font-size: 12px")
+        self.btnIniciar.setStyleSheet("font-size: 18px")
 
         self.btnAdd = QPushButton('Add segment')
         self.btnAdd.clicked.connect(self.addInterval)
         self.btnAdd.setEnabled(False)
-        self.btnAdd.setStyleSheet("font-size: 12px")
+        self.btnAdd.setStyleSheet("font-size: 18px")
         
-        
-
         txtnumseg  = QLabel("Segment num:")
-        txtnumseg.setStyleSheet("font-size: 12px")
+        txtnumseg.setStyleSheet("font-size: 18px")
         
         self.lbl_cursor  = QLabel()
-        self.lbl_cursor.setStyleSheet("font-size: 12px")
-        
-        
-        validator = QIntValidator(1, 100, self)        
-        self.txtns = QLineEdit(self)
+        self.lbl_cursor.setStyleSheet("font-size: 18px")
+                
+        validator = QIntValidator()
+        validator.setRange(100,999)        
+        self.txtns = QLineEdit()
         self.txtns.setValidator(validator)
-        self.txtns.setText('1')
         self.txtns.setEnabled(False)
-        self.txtns.setStyleSheet("font-size: 12px")
+        self.txtns.setStyleSheet("font-size: 18px")
         
         #################################################################
         ##     Elementos del layout graficos
         #################################################################
         self.plot1=pg.PlotWidget()
-        self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
+        self.plot1.setLabel('bottom',color='k', **{'font-size':'16pt'})
         self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
-        self.plot1.setLabel('left',color='k', **{'font-size':'12pt'})
+        self.plot1.setLabel('left',color='k', **{'font-size':'16pt'})
         self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
         self.plot1.showGrid(1,1,0.2)
         graficos.addWidget(self.plot1)
-
         #################################################################
         ##     Colocar elementos en layout botones
         #################################################################
@@ -164,13 +160,8 @@ class CutSignals(QMainWindow):
         results.addRow(self.lbl_cursor)
         botones.addLayout(results)        
         #################################################################
-        ##     Colocar elementos en layout graficos
-        #################################################################
-
-        #################################################################
         ##     Colocar elementos en la ventana
-        #################################################################
-        
+        #################################################################        
         bot = QWidget()
         bot.setLayout(botones)
         gra = QWidget()
