@@ -1,12 +1,16 @@
 import networkx as nx
 import pandas as pd
-from modules.visibility_graph import visibility_graph            
+from modules.visibility_graph import visibility_graph  
+from pathlib import Path          
 
 def Distance_measures(rutas, int_max_clique, frec):
     names=str.split(rutas[0],"/")
     t=len(names)
     nombre= names[t-1]
     names = str.split(rutas[0],nombre)
+    RUTA =  names[0] + '/NetWX/files/'
+    path = Path(RUTA)
+    path.mkdir(parents = True,exist_ok = True)
     
     center            = []
     diameter          = []
@@ -25,11 +29,11 @@ def Distance_measures(rutas, int_max_clique, frec):
     extrema_bounding = pd.DataFrame(extrema_bounding)
     periphery        = pd.DataFrame(periphery)
     radius           = pd.DataFrame(radius)
-    center.to_csv(names[0]+"center(visibility_graph).txt", sep = '\t',header = None,index = False)
-    diameter.to_csv(names[0]+"diameter(visibility_graph).txt", sep = '\t',header = None,index = False)
-    extrema_bounding.to_csv(names[0]+"extrema_bounding(visibility_graph).txt", sep = '\t',header = None,index = False)
-    periphery.to_csv(names[0]+"periphery(visibility_graph).txt", sep = '\t',header = None,index = False)
-    radius.to_csv(names[0]+"radius(visibility_graph).txt", sep = '\t',header = None,index = False)
+    center.to_csv(RUTA+"center(visibility_graph).txt", sep = '\t',header = None,index = False)
+    diameter.to_csv(RUTA+"diameter(visibility_graph).txt", sep = '\t',header = None,index = False)
+    extrema_bounding.to_csv(RUTA+"extrema_bounding(visibility_graph).txt", sep = '\t',header = None,index = False)
+    periphery.to_csv(RUTA+"periphery(visibility_graph).txt", sep = '\t',header = None,index = False)
+    radius.to_csv(RUTA+"radius(visibility_graph).txt", sep = '\t',header = None,index = False)
                 
     if(int_max_clique==1):
         p_center            = []
@@ -50,9 +54,9 @@ def Distance_measures(rutas, int_max_clique, frec):
         p_extrema_bounding = pd.DataFrame(p_extrema_bounding)
         p_periphery        = pd.DataFrame(p_periphery)
         p_radius           = pd.DataFrame(p_radius)
-        p_center.to_csv(names[0]+"center(maxclique_graph).txt", sep = '\t',header = None,index = False)
-        p_diameter.to_csv(names[0]+"diameter(maxclique_graph).txt", sep = '\t',header = None,index = False)
-        p_extrema_bounding.to_csv(names[0]+"extrema_bounding(maxclique_graph).txt", sep = '\t',header = None,index = False)
-        p_periphery.to_csv(names[0]+"periphery(maxclique_graph).txt", sep = '\t',header = None,index = False)
-        p_radius.to_csv(names[0]+"radius(maxclique_graph).txt", sep = '\t',header = None,index = False)
+        p_center.to_csv(RUTA+"center(maxclique_graph).txt", sep = '\t',header = None,index = False)
+        p_diameter.to_csv(RUTA+"diameter(maxclique_graph).txt", sep = '\t',header = None,index = False)
+        p_extrema_bounding.to_csv(RUTA+"extrema_bounding(maxclique_graph).txt", sep = '\t',header = None,index = False)
+        p_periphery.to_csv(RUTA+"periphery(maxclique_graph).txt", sep = '\t',header = None,index = False)
+        p_radius.to_csv(RUTA+"radius(maxclique_graph).txt", sep = '\t',header = None,index = False)
             

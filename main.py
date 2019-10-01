@@ -230,6 +230,8 @@ class Principal(QMainWindow):
         self.list2 = QComboBox()
         self.list2.addItem("100%")
         self.list2.addItem("10%")
+        self.list2.addItem("7%")
+        self.list2.addItem("5%")
         self.list2.addItem("1%")
         
         self.list3 = QComboBox()

@@ -1,12 +1,18 @@
 import networkx as nx
 import pandas as pd
 from modules.visibility_graph import visibility_graph  
+from pathlib import Path   
+
 
 def Chordal(rutas, int_max_clique, frec):
     names=str.split(rutas[0],"/")
     t=len(names)
     nombre= names[t-1]
     names = str.split(rutas[0],nombre)
+    
+    RUTA =  names[0] + '/NetWX/files/'
+    path = Path(RUTA)
+    path.mkdir(parents = True,exist_ok = True)
     
     is_chordal = []
     for i in range(len(rutas)):

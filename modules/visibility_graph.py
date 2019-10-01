@@ -23,11 +23,17 @@ def visibility_graph(ruta,frec):
     nombre= names[t-1]
     y = pd.read_csv(ruta,sep='\t', header=None)
     y = np.asarray(y[0])
+    
+    
     if(frec==0):
         m = 1
     elif(frec==1):
         m = 10
     elif(frec==2):
+        m = 14
+    elif(frec==3):
+        m = 20
+    elif(frec==4):
         m = 100
     data = []
     for j in range(0,len(y),m):
@@ -41,10 +47,14 @@ def visibility_graph(ruta,frec):
     names = str.split(ruta,nombre)
     nam   = str.split(nombre,'.')
   
+    RUTA =  names[0] + '/NetWX/images/'
+    path = Path(RUTA)
+    path.mkdir(parents = True,exist_ok = True)
+    
     plt.figure()
     plt.grid(True)
     plt.bar(range (len( vals )),vals ,width =0.2 ,align ="center")
-    plt.savefig(names[0] + nam[0]+'_bar_graph.jpg',dpi=300)
+    plt.savefig(RUTA + nam[0]+'_bar_graph.jpg',dpi=300)
     plt.close()
 
     eds = []
