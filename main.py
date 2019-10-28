@@ -18,10 +18,12 @@ from modules.Chordal import Chordal
 from modules.Grade_Max import Grade_Max
 
 import sys
+import math as math
 import numpy as np 
 import pandas as pd
 import networkx as nx
 import pyqtgraph as pg
+from time import time
 
 
 class Principal(QMainWindow):
@@ -29,14 +31,15 @@ class Principal(QMainWindow):
         self.cut_signal = CutSignals()
         self.cut_signal.show()
     def visibility_graph_button(self):
-        names=str.split(self.rutas[0],"/")
+        tiempo_ini = time()
+        names = str.split(self.rutas[0],"/")
         t=len(names)
-        self.nombre= names[t-1]
+        self.nombre = names[t-1]
         names = str.split(self.rutas[0],self.nombre)      
         for i in range(len(self.rutas)):
             P = visibility_graph(self.rutas[i],self.list2.currentIndex())
             Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.jpg')
-            if(self.int_max_clique==1):
+            if(self.int_max_clique == 1):
                 p = nx.make_max_clique_graph(P)
                 Plot(p,self.rutas[i],self.list1.currentIndex(),'_maxclique_graph.jpg')
        
@@ -54,15 +57,17 @@ class Principal(QMainWindow):
             
         self.dialogo_done = Dialog('Done!','done.png')
         self.dialogo_done.show()
+        tiempo_fin = time()
+        tiempo_total = math.modf(round(tiempo_fin - tiempo_ini,3)/60)
+        self.lbl_time.setText(str(int(tiempo_total[1]))+':'+str(int(tiempo_total[0]*60)))
         
 #%%
     def cargarSenial(self):
         self.aux = False
         self.list3.clear()
         self.plot1.clear()
-        self.nombreSenial= QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
+        self.nombreSenial = QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
         self.rutas = self.nombreSenial[0]
-        
         self.dialog = Dialog(str(len(self.rutas))+' File(s) loaded','open.png')
         self.dialog.show()
         self.list3.addItem('')
@@ -202,7 +207,6 @@ class Principal(QMainWindow):
         self.grade_max_action.setStatusTip('Graph Maximum dregree')
         menu_algorithms.addAction(self.grade_max_action)
         
-
         #################################################################
         ##     Definición de elementos contenedores
         #################################################################
@@ -213,14 +217,14 @@ class Principal(QMainWindow):
         ##     Elementos del layout botones
         #################################################################
         lbl2 = QLabel("Sampling frequency:")
-        lbl2.setStyleSheet("font-size: 18px")
+        lbl2.setStyleSheet("font-size: 20px")
         
         self.txt1 = QLineEdit("")
         self.txt1.setEnabled(True)
-        self.txt1.setStyleSheet("font-size: 18px")
+        self.txt1.setStyleSheet("font-size: 20px")
                 
         lbl_lista1 = QLabel("Graph layout:")
-        lbl_lista1.setStyleSheet("font-size: 18px")
+        lbl_lista1.setStyleSheet("font-size: 20px")
         
         self.list1 = QComboBox()
         self.list1.addItem("None")
@@ -238,28 +242,34 @@ class Principal(QMainWindow):
         self.list3.currentIndexChanged.connect(self.plots)
         
         lbl_check1 = QLabel("Make maxclique graph")
-        lbl_check1.setStyleSheet("font-size: 18px")
+        lbl_check1.setStyleSheet("font-size: 20px")
         
         self.check1 = QCheckBox()
         self.check1.stateChanged.connect(self.state_check_max_clique) 
         
         self.lbl_num_files = QLabel("Files loaded: ")
-        self.lbl_num_files.setStyleSheet("font-size: 18px")
+        self.lbl_num_files.setStyleSheet("font-size: 20px")
         
         lbl_file = QLabel("File: ")
-        lbl_file.setStyleSheet("font-size: 18px")
+        lbl_file.setStyleSheet("font-size: 20px")
+        
+        lbl_time = QLabel("Exe. time: ")
+        lbl_time.setStyleSheet("font-size: 20px")
+        
+        self.lbl_time = QLabel()
+        self.lbl_time.setStyleSheet("font-size: 20px")
         
         self.btn1 = QPushButton('Visibility graph')
         self.btn1.clicked.connect(self.visibility_graph_button)
-        self.btn1.setStyleSheet("font-size: 18px")
+        self.btn1.setStyleSheet("font-size: 20px")
         self.btn1.setEnabled(False)
         #################################################################
         ##     Elementos del layout graficos
         #################################################################
         self.plot1=pg.PlotWidget()
-        self.plot1.setLabel('bottom',color='k', **{'font-size':'16pt'})
+        self.plot1.setLabel('bottom',color='k', **{'font-size':'18pt'})
         self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
-        self.plot1.setLabel('left',color='k', **{'font-size':'16pt'})
+        self.plot1.setLabel('left',color='k', **{'font-size':'18pt'})
         self.plot1.getAxis('left').setPen(pg.mkPen(color='k', width=1))
         self.plot1.showGrid(1,1,0.2)
         graficos.addWidget(self.plot1)
@@ -272,6 +282,7 @@ class Principal(QMainWindow):
         results.addRow(lbl2, self.list2)
         results.addRow(lbl_lista1,self.list1)
         results.addRow(lbl_check1,self.check1)
+        results.addRow(lbl_time,self.lbl_time)
         botones.addLayout(results) 
         botones.addWidget(self.btn1)
         #################################################################
@@ -287,7 +298,6 @@ class Principal(QMainWindow):
 
         self.setCentralWidget(contain)
         self.show()
-        
         
 if __name__ == '__main__':
     app = QApplication(sys.argv)

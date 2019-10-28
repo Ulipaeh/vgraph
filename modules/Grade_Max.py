@@ -19,7 +19,7 @@ def Grade_Max(rutas, int_max_clique, frec):
     path.mkdir(parents = True,exist_ok = True)
     
     grad_max = pd.DataFrame(grad_max)
-    grad_max.to_csv(RUTA+"max_dregree(visibility_graph).txt", sep = '\t',header = None,index = False)
+    grad_max.to_csv(RUTA+"max_degree(visibility_graph).txt", sep = '\t',header = None,index = False)
            
         
     if(int_max_clique==1):
