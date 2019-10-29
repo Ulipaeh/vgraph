@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Created on Mon Aug 12 20:24:20 2019
 
@@ -84,7 +84,7 @@ class CutSignals(QMainWindow):
     def initUI(self):
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('Cut Signal')
-        self.setWindowIcon(QIcon("cut.png"))
+        self.setWindowIcon(QIcon("Icons\cut.png"))
         self.resize(1225, 700)
         contain=QSplitter(Qt.Horizontal)
         #################################################################

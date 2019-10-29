@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Created on Mon Aug 12 20:24:20 2019
 
@@ -55,7 +55,7 @@ class Principal(QMainWindow):
         if(self.int_4 == 1):
             Grade_Max(self.rutas, self.int_max_clique, self.list2.currentIndex())
             
-        self.dialogo_done = Dialog('Done!','done.png')
+        self.dialogo_done = Dialog('Done!','Icons\done.png')
         self.dialogo_done.show()
         tiempo_fin = time()
         tiempo_total = math.modf(round(tiempo_fin - tiempo_ini,3)/60)
@@ -139,7 +139,7 @@ class Principal(QMainWindow):
         super().__init__()
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('NetWX')
-        self.setWindowIcon(QIcon("icon.ico"))
+        self.setWindowIcon(QIcon("Icons\icon.ico"))
         self.resize(1225, 700)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
@@ -170,14 +170,14 @@ class Principal(QMainWindow):
         menu_archivo = barra_menu.addMenu('&File')
         menu_algorithms = barra_menu.addMenu('&Algorithms')
   
-        abrir_action = QAction(QIcon('open.png'), 'Open File(s)', self)
+        abrir_action = QAction(QIcon('Icons\open.png'), 'Open File(s)', self)
         abrir_action.setToolTip('Open File(s)')
         abrir_action.setStatusTip('Open File(s)')
         abrir_action.triggered.connect(self.cargarSenial)
         barra_herr.addAction(abrir_action)
         menu_archivo.addAction(abrir_action)
         
-        cortar_action = QAction(QIcon('cut.png'), 'Cut Signal', self)
+        cortar_action = QAction(QIcon('Icons\cut.png'), 'Cut Signal', self)
         cortar_action.setToolTip('Cut Signal')
         cortar_action.setStatusTip('Cut Signal')
         cortar_action.triggered.connect(self.cutSignal_boton)
