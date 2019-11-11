@@ -14,7 +14,7 @@ def Plot(P,ruta,style,label):
     RUTA =  names[0] + '/NetWX/images/'
     path = Path(RUTA)
     path.mkdir(parents = True,exist_ok = True)
-#    plt.rcParams.update({'figure.max_open_warning': 0})
+    plt.rcParams.update({'figure.max_open_warning': 0})
     plt.figure()
     if(style==0): 
         nx.draw(P,with_labels=True)

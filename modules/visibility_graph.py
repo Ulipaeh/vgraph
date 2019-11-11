@@ -12,9 +12,6 @@ def is_visible (y ,a ,b ):
         c = c +1
     return isit
 
-def grado_max (G):
-    return max(dict(G.degree(G.nodes())). values ())
-
 def visibility_graph(ruta,frec):
     names=str.split(ruta,"/")
     t=len(names)
@@ -36,9 +33,8 @@ def visibility_graph(ruta,frec):
     for j in range(0,len(y),m):
         data.append(y[j])
     y = data
-    vals = [float(y[1])]
+    vals = []
     for j in range(int(len(y))):
-        new = vals[-1]
         vals.append(float(y[j]))
     
     names = str.split(ruta,nombre)
@@ -60,8 +56,6 @@ def visibility_graph(ruta,frec):
             if is_visible(vals,a,b):
                 eds.append((a,b))
     P = nx.Graph(eds)
-#    vals = pd.DataFrame(vals)
-#    vals.to_csv(names[0]+'_redu_freq_'+nam[0]+'.txt', index = False)
     return(P)
                 
            

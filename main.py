@@ -18,6 +18,7 @@ from modules.Chordal import Chordal
 from modules.Grade_Max import Grade_Max
 
 import sys
+import os
 import math as math
 import numpy as np 
 import pandas as pd
@@ -27,6 +28,11 @@ from time import time
 
 
 class Principal(QMainWindow):
+    
+    def resource_path(self, relative_path):
+        base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        return os.path.join(base_path, relative_path)    
+    
     def cutSignal_boton(self):
         self.cut_signal = CutSignals()
         self.cut_signal.show()
@@ -55,7 +61,8 @@ class Principal(QMainWindow):
         if(self.int_4 == 1):
             Grade_Max(self.rutas, self.int_max_clique, self.list2.currentIndex())
             
-        self.dialogo_done = Dialog('Done!','Icons\done.png')
+            
+        self.dialogo_done = Dialog('Done!',self.resource_path('Icons/done.png'))
         self.dialogo_done.show()
         tiempo_fin = time()
         tiempo_total = math.modf(round(tiempo_fin - tiempo_ini,3)/60)
@@ -68,7 +75,7 @@ class Principal(QMainWindow):
         self.plot1.clear()
         self.nombreSenial = QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
         self.rutas = self.nombreSenial[0]
-        self.dialog = Dialog(str(len(self.rutas))+' File(s) loaded','open.png')
+        self.dialog = Dialog(str(len(self.rutas))+' File(s) loaded',self.resource_path('Icons/open.png'))
         self.dialog.show()
         self.list3.addItem('')
         for i in range(len(self.rutas)):
@@ -139,7 +146,7 @@ class Principal(QMainWindow):
         super().__init__()
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('NetWX')
-        self.setWindowIcon(QIcon("Icons\icon.ico"))
+        self.setWindowIcon(QIcon(self.resource_path('Icons/icono2.png')))
         self.resize(1225, 700)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
@@ -170,18 +177,19 @@ class Principal(QMainWindow):
         menu_archivo = barra_menu.addMenu('&File')
         menu_algorithms = barra_menu.addMenu('&Algorithms')
   
-        abrir_action = QAction(QIcon('Icons\open.png'), 'Open File(s)', self)
+        abrir_action = QAction(QIcon(self.resource_path('Icons/open.png')), 'Open File(s)', self)
         abrir_action.setToolTip('Open File(s)')
         abrir_action.setStatusTip('Open File(s)')
         abrir_action.triggered.connect(self.cargarSenial)
         barra_herr.addAction(abrir_action)
         menu_archivo.addAction(abrir_action)
         
-        cortar_action = QAction(QIcon('Icons\cut.png'), 'Cut Signal', self)
+        cortar_action = QAction(QIcon(self.resource_path('Icons/cut.png')), 'Cut Signal', self)
         cortar_action.setToolTip('Cut Signal')
         cortar_action.setStatusTip('Cut Signal')
         cortar_action.triggered.connect(self.cutSignal_boton)
         barra_herr.addAction(cortar_action)
+        menu_archivo.addAction(cortar_action)
         
         self.chordal_action = QAction('Chordal',self ,checkable=True)
         self.chordal_action.triggered.connect(self.state_check_3)
