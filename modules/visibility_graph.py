@@ -1,6 +1,6 @@
-import numpy as np
-import pandas as pd
-import networkx as nx
+from numpy import asarray
+from pandas import read_csv
+from networkx import Graph
 import matplotlib.pyplot as plt
 from pathlib import Path
 
@@ -13,11 +13,11 @@ def is_visible (y ,a ,b ):
     return isit
 
 def visibility_graph(ruta,frec):
-    names=str.split(ruta,"/")
-    t=len(names)
-    nombre= names[t-1]
-    y = pd.read_csv(ruta,sep='\t', header=None)
-    y = np.asarray(y[0])
+    names = str.split(ruta,"/")
+    t = len(names)
+    nombre = names[t-1]
+    y = read_csv(ruta,sep='\t', header=None)
+    y = asarray(y[0])
     
     if(frec==0):
         m = 1
@@ -55,7 +55,7 @@ def visibility_graph(ruta,frec):
         for b in range(a+1,len(vals)):
             if is_visible(vals,a,b):
                 eds.append((a,b))
-    P = nx.Graph(eds)
+    P = Graph(eds)
     return(P)
                 
            

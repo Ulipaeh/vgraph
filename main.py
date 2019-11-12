@@ -20,9 +20,9 @@ from modules.Grade_Max import Grade_Max
 import sys
 import os
 import math as math
-import numpy as np 
-import pandas as pd
-import networkx as nx
+from numpy import asarray 
+from pandas import read_csv
+from networkx import make_max_clique_graph
 import pyqtgraph as pg
 from time import time
 
@@ -46,7 +46,7 @@ class Principal(QMainWindow):
             P = visibility_graph(self.rutas[i],self.list2.currentIndex())
             Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.jpg')
             if(self.int_max_clique == 1):
-                p = nx.make_max_clique_graph(P)
+                p = make_max_clique_graph(P)
                 Plot(p,self.rutas[i],self.list1.currentIndex(),'_maxclique_graph.jpg')
        
         if(self.int_1 == 1):
@@ -124,12 +124,12 @@ class Principal(QMainWindow):
             self.plot1.clear()
             i= self.list3.currentIndex()-1
             if(len(self.rutas)!=0):            
-                data = pd.read_csv(self.rutas[i],sep='\t', header=None)
+                data = read_csv(self.rutas[i],sep='\t', header=None)
                 lineas= data.shape[1]
                 if(lineas == 1):
-                    self.y = np.asarray(data[0])
+                    self.y = asarray(data[0])
                 elif(lineas == 2):
-                    self.y = np.asarray(data[1])
+                    self.y = asarray(data[1])
                 self.plot1.setLabel('bottom',color='k', **{'font-size':'12pt'})
                 self.plot1.getAxis('bottom').setPen(pg.mkPen(color='k', width=1))
                 # Y1 axis   
