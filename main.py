@@ -44,10 +44,10 @@ class Principal(QMainWindow):
         names = str.split(self.rutas[0],self.nombre)      
         for i in range(len(self.rutas)):
             P = visibility_graph(self.rutas[i],self.list2.currentIndex())
-            Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.jpg')
+            Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.png')
             if(self.int_max_clique == 1):
                 p = make_max_clique_graph(P)
-                Plot(p,self.rutas[i],self.list1.currentIndex(),'_maxclique_graph.jpg')
+                Plot(p,self.rutas[i],self.list1.currentIndex(),'_maxclique_graph.png')
        
         if(self.int_1 == 1):
             Cliques(self.rutas, self.int_max_clique, self.list2.currentIndex())
@@ -75,7 +75,7 @@ class Principal(QMainWindow):
         self.plot1.clear()
         self.nombreSenial = QFileDialog.getOpenFileNames(None, 'Open file(s)', '/home')
         self.rutas = self.nombreSenial[0]
-        self.dialog = Dialog(str(len(self.rutas))+' File(s) loaded',self.resource_path('Icons/open.png'))
+        self.dialog = Dialog(str(len(self.rutas))+' File(s) loaded','Icons/open.png')
         self.dialog.show()
         self.list3.addItem('')
         for i in range(len(self.rutas)):
@@ -146,7 +146,7 @@ class Principal(QMainWindow):
         super().__init__()
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('NetWX')
-        self.setWindowIcon(QIcon(self.resource_path('Icons/icono2.png')))
+        self.setWindowIcon(QIcon('Icons\icono2.png'))
         self.resize(1225, 700)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
@@ -177,14 +177,14 @@ class Principal(QMainWindow):
         menu_archivo = barra_menu.addMenu('&File')
         menu_algorithms = barra_menu.addMenu('&Algorithms')
   
-        abrir_action = QAction(QIcon(self.resource_path('Icons/open.png')), 'Open File(s)', self)
+        abrir_action = QAction(QIcon('Icons/open.png'), 'Open File(s)', self)
         abrir_action.setToolTip('Open File(s)')
         abrir_action.setStatusTip('Open File(s)')
         abrir_action.triggered.connect(self.cargarSenial)
         barra_herr.addAction(abrir_action)
         menu_archivo.addAction(abrir_action)
         
-        cortar_action = QAction(QIcon(self.resource_path('Icons/cut.png')), 'Cut Signal', self)
+        cortar_action = QAction(QIcon('Icons/cut.png'), 'Cut Signal', self)
         cortar_action.setToolTip('Cut Signal')
         cortar_action.setStatusTip('Cut Signal')
         cortar_action.triggered.connect(self.cutSignal_boton)

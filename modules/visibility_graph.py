@@ -3,6 +3,7 @@ from pandas import read_csv
 from networkx import Graph
 import matplotlib.pyplot as plt
 from pathlib import Path
+from numpy import vectorize
 
 def is_visible (y ,a ,b ):
     isit = True
@@ -16,9 +17,13 @@ def visibility_graph(ruta,frec):
     names = str.split(ruta,"/")
     t = len(names)
     nombre = names[t-1]
-    y = read_csv(ruta,sep='\t', header=None)
-    y = asarray(y[0])
-    
+    data = asarray(read_csv(ruta,sep='\t', header=None))
+    if(min(data)[0]<=0):
+        funcion = vectorize(lambda x: x + (-1)*min(data)[0])
+        y = funcion(data)    
+    else:
+        y = data
+        
     if(frec==0):
         m = 1
     elif(frec==1):
@@ -29,6 +34,7 @@ def visibility_graph(ruta,frec):
         m = 20
     elif(frec==4):
         m = 100
+        
     data = []
     for j in range(0,len(y),m):
         data.append(y[j])
@@ -47,7 +53,7 @@ def visibility_graph(ruta,frec):
     plt.figure()
     plt.grid(True)
     plt.bar(range (len( vals )),vals ,width =0.2 ,align ="center")
-    plt.savefig(RUTA + nam[0]+'_bar_graph.jpg',dpi=300)
+    plt.savefig(RUTA + nam[0]+'_bar_graph.png',dpi=300)
     plt.close()
 
     eds = []
