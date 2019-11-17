@@ -81,7 +81,7 @@ class Principal(QMainWindow):
         for i in range(len(self.rutas)):
             names=str.split(self.rutas[i],"/")
             t=len(names)
-            nombre= names[t-1]
+            nombre = names[t-1]
             self.list3.addItem(nombre)
             
         if(len(self.rutas)==0):

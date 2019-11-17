@@ -1,9 +1,8 @@
-from numpy import asarray
-from pandas import read_csv
+import numpy as np
+import pandas as pd
 from networkx import Graph
 import matplotlib.pyplot as plt
 from pathlib import Path
-from numpy import vectorize
 
 def is_visible (y ,a ,b ):
     isit = True
@@ -17,12 +16,14 @@ def visibility_graph(ruta,frec):
     names = str.split(ruta,"/")
     t = len(names)
     nombre = names[t-1]
-    data = asarray(read_csv(ruta,sep='\t', header=None))
-    if(min(data)[0]<=0):
-        funcion = vectorize(lambda x: x + (-1)*min(data)[0])
-        y = funcion(data)    
-    else:
-        y = data
+    data = np.asarray(pd.read_csv(ruta,sep='\t', header=None))
+#    if(min(data)[0]<=0):
+#        funcion = np.vectorize(lambda x: x + (-1)*min(data)[0])
+#        y = funcion(data)    
+#    else:
+#        y = data
+    
+    y = data
         
     if(frec==0):
         m = 1

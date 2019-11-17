@@ -23,6 +23,7 @@ class Dialog(QDialog):
         self.label = label
 
         lbl = QLabel(self.label)
+        lbl.setStyleSheet("font-size: 20px")
 
         dialogbutton = QDialogButtonBox()
         dialogbutton.setOrientation(Qt.Horizontal)

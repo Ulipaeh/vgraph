@@ -1,5 +1,3 @@
-from numba import jit
-@jit(nopython=True, cache=True)
 def is_visible (y ,a ,b ):
     isit = True
     c = a +1

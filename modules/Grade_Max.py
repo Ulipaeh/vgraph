@@ -1,5 +1,5 @@
 from networkx import make_max_clique_graph
-from pandas import DataFrame
+import pandas as pd
 from modules.visibility_graph import visibility_graph 
 from modules.Functions import grado_max 
 from pathlib import Path
@@ -18,7 +18,7 @@ def Grade_Max(rutas, int_max_clique, frec):
     path = Path(RUTA)
     path.mkdir(parents = True,exist_ok = True)
     
-    grad_max = DataFrame(grad_max)
+    grad_max = pd.DataFrame(grad_max)
     grad_max.to_csv(RUTA+"max_degree(visibility_graph).txt", sep = '\t',header = None,index = False)
            
         
@@ -29,5 +29,5 @@ def Grade_Max(rutas, int_max_clique, frec):
             p = make_max_clique_graph(P)
             p_grad_max.append(grado_max(p))
                 
-        p_grad_max = DataFrame(p_grad_max)
+        p_grad_max = pd.DataFrame(p_grad_max)
         p_grad_max.to_csv(RUTA+"max_degree(maxclique_graph).txt", sep = '\t',header = None,index = False)
