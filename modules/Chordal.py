@@ -1,31 +1,15 @@
-import networkx as nx
-import pandas as pd
-from modules.visibility_graph import visibility_graph  
+from networkx import is_chordal
+from pandas import DataFrame
 from pathlib import Path   
 
-
-def Chordal(rutas, int_max_clique, frec):
-    names=str.split(rutas[0],"/")
-    t=len(names)
-    nombre= names[t-1]
-    names = str.split(rutas[0],nombre)
-    
-    RUTA =  names[0] + '/NetWX/files/'
+def Chordal(P, tipo, ruta):
+    RUTA =  ruta + '/NetWX/files/'
     path = Path(RUTA)
     path.mkdir(parents = True,exist_ok = True)
     
-    is_chordal = []
-    for i in range(len(rutas)):
-        P = visibility_graph(rutas[i], frec)
-        is_chordal.append(nx.is_chordal(P))
-    is_chordal            = pd.DataFrame(is_chordal)
-    is_chordal.to_csv(names[0]+"is_chordal(visibility_graph).txt", sep = '\t',header = None,index = False)
+    P_is_chordal = []
+    for i in range(len(P)):
+        P_is_chordal.append(is_chordal(P[i]))
+    P_is_chordal = DataFrame(is_chordal)
+    P_is_chordal.to_csv(RUTA + tipo +" is_chordal.txt", sep = '\t',header = None,index = False)
     
-    if(int_max_clique==1):
-        p_is_chordal = []
-        for i in range(len(rutas)):
-            P = visibility_graph(rutas[i],frec)
-            p = nx.make_max_clique_graph(P)
-            p_is_chordal.append(nx.is_chordal(p))
-        p_is_chordal = pd.DataFrame(p_is_chordal)
-        p_is_chordal.to_csv(names[0]+"is_chordal(maxclique_graph).txt", sep = '\t',header = None,index = False)

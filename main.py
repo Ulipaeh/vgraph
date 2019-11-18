@@ -19,7 +19,7 @@ from modules.Grade_Max import Grade_Max
 
 import sys
 import os
-import math as math
+from math import modf
 from numpy import asarray 
 from pandas import read_csv
 from networkx import make_max_clique_graph
@@ -38,34 +38,54 @@ class Principal(QMainWindow):
         self.cut_signal.show()
     def visibility_graph_button(self):
         tiempo_ini = time()
+        
         names = str.split(self.rutas[0],"/")
         t=len(names)
         self.nombre = names[t-1]
-        names = str.split(self.rutas[0],self.nombre)      
+        names = str.split(self.rutas[0],self.nombre)   
+        
+        visibility_graphs = []
+        if(self.int_max_clique == 1):
+            maxclique_graphs = []
         for i in range(len(self.rutas)):
             P = visibility_graph(self.rutas[i],self.list2.currentIndex())
             Plot(P,self.rutas[i],self.list1.currentIndex(),'_visibility_graph.png')
+            visibility_graphs.append(P)
             if(self.int_max_clique == 1):
                 p = make_max_clique_graph(P)
                 Plot(p,self.rutas[i],self.list1.currentIndex(),'_maxclique_graph.png')
+                maxclique_graphs.append(p)
        
         if(self.int_1 == 1):
-            Cliques(self.rutas, self.int_max_clique, self.list2.currentIndex())
-         
+            Cliques(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
+     
         if(self.int_2 == 1):
-            Distance_measures(self.rutas, self.int_max_clique, self.list2.currentIndex())
+            Distance_measures(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
         
         if(self.int_3 == 1):
-            Chordal(self.rutas, self.int_max_clique, self.list2.currentIndex())
+            Chordal(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
         
         if(self.int_4 == 1):
-            Grade_Max(self.rutas, self.int_max_clique, self.list2.currentIndex())
+            Grade_Max(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
+            
+        if(self.int_max_clique == 1):
+            if(self.int_1 == 1):
+                Cliques(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+         
+            if(self.int_2 == 1):
+                Distance_measures(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+            
+            if(self.int_3 == 1):
+                Chordal(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+            
+            if(self.int_4 == 1):
+                Grade_Max(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
             
             
         self.dialogo_done = Dialog('Done!',self.resource_path('Icons/done.png'))
         self.dialogo_done.show()
         tiempo_fin = time()
-        tiempo_total = math.modf(round(tiempo_fin - tiempo_ini,3)/60)
+        tiempo_total = modf(round(tiempo_fin - tiempo_ini,3)/60)
         self.lbl_time.setText(str(int(tiempo_total[1]))+':'+str(int(tiempo_total[0]*60)))
         
 #%%
