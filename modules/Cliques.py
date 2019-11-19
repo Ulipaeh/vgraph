@@ -17,7 +17,7 @@ def Cliques(P, tipo, ruta):
     graph_clique_num      = DataFrame(graph_clique_num)
     graph_number_of_cliqs = DataFrame(graph_number_of_cliqs)
     graph_find_cliques    = DataFrame(graph_find_cliques)
-    graph_clique_num.to_csv(RUTA + tipo + " clique_num.txt", sep = '\t',header = None,index = False)
-    graph_number_of_cliqs.to_csv(RUTA + tipo + " graph_number_of_cliqs.txt", sep = '\t',header = None,index = False)
-    graph_find_cliques.to_csv(RUTA + tipo + " find_cliques.txt", sep = '\t',header = None,index = False)
+    graph_clique_num.to_csv(RUTA + tipo + " - clique num.txt", sep = '\t',header = None,index = False)
+    graph_number_of_cliqs.to_csv(RUTA + tipo + " - number of maxcliques.txt", sep = '\t',header = None,index = False)
+    graph_find_cliques.to_csv(RUTA + tipo + " - find cliques.txt", sep = '\t',header = None,index = False)
     

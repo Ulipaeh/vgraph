@@ -23,10 +23,10 @@ def Distance_measures(P, tipo, ruta):
     P_extrema_bounding = DataFrame(P_extrema_bounding)
     P_periphery        = DataFrame(P_periphery)
     P_radius           = DataFrame(P_radius)
-    P_center.to_csv(RUTA+"center(visibility_graph).txt", sep = '\t',header = None,index = False)
-    P_diameter.to_csv(RUTA+"diameter(visibility_graph).txt", sep = '\t',header = None,index = False)
-    P_extrema_bounding.to_csv(RUTA+"extrema_bounding(visibility_graph).txt", sep = '\t',header = None,index = False)
-    P_periphery.to_csv(RUTA+"periphery(visibility_graph).txt", sep = '\t',header = None,index = False)
-    P_radius.to_csv(RUTA+"radius(visibility_graph).txt", sep = '\t',header = None,index = False)
+    P_center.to_csv(RUTA + tipo + " - center.txt", sep = '\t',header = None,index = False)
+    P_diameter.to_csv(RUTA + tipo +" - diameter.txt", sep = '\t',header = None,index = False)
+    P_extrema_bounding.to_csv(RUTA + tipo +" - extrema_bounding.txt", sep = '\t',header = None,index = False)
+    P_periphery.to_csv(RUTA + tipo + " - periphery.txt", sep = '\t',header = None,index = False)
+    P_radius.to_csv(RUTA + tipo + " - radius.txt", sep = '\t',header = None,index = False)
                 
             

@@ -123,7 +123,12 @@ class CutSignals(QMainWindow):
             self.txt_total.setText(str(len(self.inicio)))
             self.btn_loc.setEnabled(True)
             self.btnauto.setEnabled(False)
-        else:
+        elif(len(self.txt_umbral.text())!=0 or len(self.txt_basal.text())!=0 or len(self.txt_ancho.text())!=0 
+           or len(self.txt_separacion.text())!=0):
+            self.dialogo_error = Dialog('Error: Missing value ','Icons\error.png')
+            self.dialogo_error.show()
+        elif(len(self.txt_umbral.text())!=0 and len(self.txt_basal.text())!=0 and len(self.txt_ancho.text())!=0 
+           and len(self.txt_separacion.text())!=0):
             self.dialogo_error = Dialog('Error: Missing value ','Icons\error.png')
             self.dialogo_error.show()
             
@@ -218,15 +223,15 @@ class CutSignals(QMainWindow):
         self.txtns.setValidator(validator)
         self.txtns.setEnabled(False)
         
-        lbl_umbral = QLabel('Amplitude aprox:')
+        lbl_umbral = QLabel('Upper threshold:')
         lbl_umbral.setStyleSheet("font-size: 18px")
         self.txt_umbral = QLineEdit()
         
-        lbl_basal = QLabel('Baseline aprox:')
+        lbl_basal = QLabel('Lower threshold')
         lbl_basal.setStyleSheet("font-size: 18px")
         self.txt_basal = QLineEdit()
         
-        lbl_ancho = QLabel('Length aprox:')
+        lbl_ancho = QLabel('Segment width ')
         lbl_ancho.setStyleSheet("font-size: 18px")
         self.txt_ancho = QLineEdit()
         
@@ -239,13 +244,13 @@ class CutSignals(QMainWindow):
         self.btnauto.setStyleSheet("font-size: 18px")
         self.btnauto.setEnabled(False)
         
-        lbl_total = QLabel('# of spikes:')
+        lbl_total = QLabel('# of segments:')
         lbl_total.setStyleSheet('font-size: 18px')
         
         self.txt_total = QLabel()
         self.txt_total.setStyleSheet('font-size: 18px')
         
-        lbl_file = QLabel('Spike:')
+        lbl_file = QLabel('Segment: ')
         lbl_file.setStyleSheet("font-size: 18px")
         self.seg_pos = QComboBox()
         self.seg_pos.currentIndexChanged.connect(self.localizacion)
@@ -255,10 +260,13 @@ class CutSignals(QMainWindow):
         self.lbl_final = QLabel()
         self.lbl_final.setStyleSheet("font-size: 18px")
         
-        self.btn_loc = QPushButton('Loc')
+        self.btn_loc = QPushButton('Find segment')
         self.btn_loc.setStyleSheet("font-size: 18px")
         self.btn_loc.clicked.connect(self.colocar)
         self.btn_loc.setEnabled(False)
+        
+        lbl_autoseg = QLabel("Auto-Segmentation")
+        lbl_autoseg.setStyleSheet("font-size: 20px")
         
 #        self.seg_pos.currentIndexChanged.connect(self.plots)
         
@@ -281,6 +289,7 @@ class CutSignals(QMainWindow):
         results.addRow(self.btnAdd)
         botones.addLayout(results)     
         
+        results2.addRow(lbl_autoseg)
         results2.addRow(lbl_umbral, self.txt_umbral)
         results2.addRow(lbl_basal , self.txt_basal)
         results2.addRow(lbl_ancho , self.txt_ancho)

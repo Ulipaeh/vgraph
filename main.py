@@ -57,29 +57,29 @@ class Principal(QMainWindow):
                 maxclique_graphs.append(p)
        
         if(self.int_1 == 1):
-            Cliques(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
+            Cliques(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
      
         if(self.int_2 == 1):
-            Distance_measures(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
+            Distance_measures(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
         
         if(self.int_3 == 1):
-            Chordal(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
+            Chordal(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
         
         if(self.int_4 == 1):
-            Grade_Max(P = visibility_graphs, tipo ='visibility_graph', ruta = names[0])
+            Grade_Max(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
             
         if(self.int_max_clique == 1):
             if(self.int_1 == 1):
-                Cliques(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+                Cliques(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
          
             if(self.int_2 == 1):
-                Distance_measures(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+                Distance_measures(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
             
             if(self.int_3 == 1):
-                Chordal(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+                Chordal(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
             
             if(self.int_4 == 1):
-                Grade_Max(P = maxclique_graphs, tipo ='maxclique_graph', ruta = names[0])
+                Grade_Max(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
             
             
         self.dialogo_done = Dialog('Done!',self.resource_path('Icons/done.png'))

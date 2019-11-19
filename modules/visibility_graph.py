@@ -22,8 +22,9 @@ def visibility_graph(ruta,frec):
 #        y = funcion(data)    
 #    else:
 #        y = data
-    
+
     y = data
+    
         
     if(frec==0):
         m = 1

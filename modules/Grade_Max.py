@@ -12,6 +12,6 @@ def Grade_Max(P, tipo, ruta):
         grad_max.append(grado_max(P[i]))
         
     grad_max = DataFrame(grad_max)
-    grad_max.to_csv(RUTA + tipo + " max_degree.txt", sep = '\t',header = None, index = False)
+    grad_max.to_csv(RUTA + tipo + " - max degree.txt", sep = '\t',header = None, index = False)
            
         
