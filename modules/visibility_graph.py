@@ -22,8 +22,21 @@ def visibility_graph(ruta,frec):
 #        y = funcion(data)    
 #    else:
 #        y = data
+    
+    names = str.split(ruta,nombre)
+    nam   = str.split(nombre,'.')
+  
+    RUTA =  names[0] + '/NetWX/images/'
+    path = Path(RUTA)
+    path.mkdir(parents = True,exist_ok = True)
 
     y = data
+    
+    plt.figure()
+    plt.grid(True)
+    plt.plot(y)
+    plt.savefig(RUTA + nam[0]+'.png',dpi=300)
+    plt.close()
     
         
     if(frec==0):
@@ -35,6 +48,10 @@ def visibility_graph(ruta,frec):
     elif(frec==3):
         m = 20
     elif(frec==4):
+        m = 25
+    elif(frec==5):
+        m = 33
+    elif(frec==6):
         m = 100
         
     data = []
@@ -45,12 +62,6 @@ def visibility_graph(ruta,frec):
     for j in range(int(len(y))):
         vals.append(float(y[j]))
     
-    names = str.split(ruta,nombre)
-    nam   = str.split(nombre,'.')
-  
-    RUTA =  names[0] + '/NetWX/images/'
-    path = Path(RUTA)
-    path.mkdir(parents = True,exist_ok = True)
     
     plt.figure()
     plt.grid(True)

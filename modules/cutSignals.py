@@ -16,11 +16,9 @@ import pandas as pd
 import sys
 
 class CutSignals(QMainWindow):
-
     def __init__(self):
         super(CutSignals, self).__init__()
         self.initUI()
-
 #%%
     def cargarSenial(self):
         self.txt_total.setText('')
@@ -51,8 +49,6 @@ class CutSignals(QMainWindow):
             self.plot1.setTitle(self.nombre)
             self.plot1.plot(self.y,pen='k')
             self.btnauto.setEnabled(True)
-            
-            
 #%%
     def localizacion(self):
         if(self.aux == True):
@@ -113,7 +109,7 @@ class CutSignals(QMainWindow):
             names = str.split(self.nombreSenial[0],self.nombre)
             nam   = str.split(self.nombre,'.') 
     
-            for i in range(len(loc)):
+            for i in range(len(ini)):
                 self.seg_pos.addItem(str(i+1))
                 self.inicio.append(int(ini[i]))
                 self.final.append(int(end[i]))
@@ -139,8 +135,6 @@ class CutSignals(QMainWindow):
         self.plot1.addItem(self.lr)
         self.btnIniciar.setEnabled(False)
         self.aux2 = True
-        
-        
 #%%      
     def addInterval(self):
         if(len(self.txtns.text())==0):
@@ -174,13 +168,10 @@ class CutSignals(QMainWindow):
         ##     Definición de variables globales
         #################################################################
         self.ruta = None
-        self.nombreSenial=''
-        self.x=[]
-        self.y=[]
-        self.suspiros = []
+        self.nombreSenial = ''
+        self.y = []
         self.duracion = []
-        self.intervalos = []
-        self.contador=0
+        self.contador = 0
         self.ini = 0 
         self.fin = 0
         self.aux = 0
@@ -267,9 +258,6 @@ class CutSignals(QMainWindow):
         
         lbl_autoseg = QLabel("Auto-Segmentation")
         lbl_autoseg.setStyleSheet("font-size: 20px")
-        
-#        self.seg_pos.currentIndexChanged.connect(self.plots)
-        
         #################################################################
         ##     Elementos del layout graficos
         #################################################################

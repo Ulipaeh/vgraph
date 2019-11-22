@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import (QMainWindow, QFileDialog, QLabel, QToolBar, QAction
 from PyQt5.QtCore import Qt
 from modules.Dialog import Dialog
 from modules.cutSignals import CutSignals
+#from modules.export_to_txt import Export
+from modules.K_means import K_means
 from modules.visibility_graph import visibility_graph
 from modules.Plot import Plot
 from modules.Cliques import Cliques
@@ -36,6 +38,14 @@ class Principal(QMainWindow):
     def cutSignal_boton(self):
         self.cut_signal = CutSignals()
         self.cut_signal.show()
+    def kmeans_button(self):
+        self.k_means = K_means()
+        self.k_means.show()
+
+#    def export_boton(self):
+#        self.export_to_txt = Export()
+#        self.export_to_txt.show()
+#        
     def visibility_graph_button(self):
         tiempo_ini = time()
         
@@ -43,6 +53,8 @@ class Principal(QMainWindow):
         t=len(names)
         self.nombre = names[t-1]
         names = str.split(self.rutas[0],self.nombre)   
+        
+        self.RUTA =  names[0] + '/NetWX/files/'
         
         visibility_graphs = []
         if(self.int_max_clique == 1):
@@ -87,7 +99,8 @@ class Principal(QMainWindow):
         tiempo_fin = time()
         tiempo_total = modf(round(tiempo_fin - tiempo_ini,3)/60)
         self.lbl_time.setText(str(int(tiempo_total[1]))+':'+str(int(tiempo_total[0]*60)))
-        
+#        self.txt_clusters.setEnabled(True)
+    
 #%%
     def cargarSenial(self):
         self.aux = False
@@ -142,7 +155,7 @@ class Principal(QMainWindow):
     def plots(self):
         if(self.aux == True):
             self.plot1.clear()
-            i= self.list3.currentIndex()-1
+            i = self.list3.currentIndex()-1
             if(len(self.rutas)!=0):            
                 data = read_csv(self.rutas[i],sep='\t', header=None)
                 lineas= data.shape[1]
@@ -194,14 +207,17 @@ class Principal(QMainWindow):
         barra_menu = QMenuBar()
         self.setMenuBar(barra_menu)
         
-        menu_archivo = barra_menu.addMenu('&File')
+        menu_archivo    = barra_menu.addMenu('&File')
         menu_algorithms = barra_menu.addMenu('&Algorithms')
+        menu_clusters   = barra_menu.addMenu('&Cluster Analysis')
   
         abrir_action = QAction(QIcon('Icons/open.png'), 'Open File(s)', self)
         abrir_action.setToolTip('Open File(s)')
         abrir_action.setStatusTip('Open File(s)')
         abrir_action.triggered.connect(self.cargarSenial)
         barra_herr.addAction(abrir_action)
+        barra_herr.addSeparator()
+        barra_herr.addSeparator()
         menu_archivo.addAction(abrir_action)
         
         cortar_action = QAction(QIcon('Icons/cut.png'), 'Cut Signal', self)
@@ -211,30 +227,42 @@ class Principal(QMainWindow):
         barra_herr.addAction(cortar_action)
         menu_archivo.addAction(cortar_action)
         
-        self.chordal_action = QAction('Chordal',self ,checkable=True)
-        self.chordal_action.triggered.connect(self.state_check_3)
-        self.chordal_action.setToolTip('Algorithms for chordal graphs.')
-        self.chordal_action.setStatusTip('Algorithms for chordal graphs.')
-        menu_algorithms.addAction(self.chordal_action)
+#        exportar_action = QAction(QIcon('Icons/cut.png'), 'Export to .txt', self)
+#        exportar_action.setToolTip('Export to .txt')
+#        exportar_action.setStatusTip('Export to .txt')
+#        exportar_action.triggered.connect(self.export_boton)
+#        barra_herr.addAction(exportar_action)
+#        menu_archivo.addAction(exportar_action)
         
-        self.cliques_action = QAction('Clique',self ,checkable=True)
-        self.cliques_action.triggered.connect(self.state_check_1)
-        self.cliques_action.setToolTip('Functions for finding and manipulating cliques.')
-        self.cliques_action.setStatusTip('Functions for finding and manipulating cliques.')
-        menu_algorithms.addAction(self.cliques_action)
+        chordal_action = QAction('Chordal',self ,checkable=True)
+        chordal_action.triggered.connect(self.state_check_3)
+        chordal_action.setToolTip('Algorithms for chordal graphs.')
+        chordal_action.setStatusTip('Algorithms for chordal graphs.')
+        menu_algorithms.addAction(chordal_action)
         
-        self.distance_measures_action = QAction('Distance Measures',self ,checkable=True)
-        self.distance_measures_action.triggered.connect(self.state_check_2)
-        self.distance_measures_action.setToolTip('Graph diameter, radius, eccentricity and other properties')
-        self.distance_measures_action.setStatusTip('Graph diameter, radius, eccentricity and other properties')
-        menu_algorithms.addAction(self.distance_measures_action)
+        cliques_action = QAction('Clique',self ,checkable=True)
+        cliques_action.triggered.connect(self.state_check_1)
+        cliques_action.setToolTip('Functions for finding and manipulating cliques.')
+        cliques_action.setStatusTip('Functions for finding and manipulating cliques.')
+        menu_algorithms.addAction(cliques_action)
         
-        self.grade_max_action = QAction('Maximum Dregree',self ,checkable=True)
-        self.grade_max_action.triggered.connect(self.state_check_4)
-        self.grade_max_action.setToolTip('Graph Maximum dregree')
-        self.grade_max_action.setStatusTip('Graph Maximum dregree')
-        menu_algorithms.addAction(self.grade_max_action)
+        distance_measures_action = QAction('Distance Measures',self ,checkable=True)
+        distance_measures_action.triggered.connect(self.state_check_2)
+        distance_measures_action.setToolTip('Graph diameter, radius, eccentricity and other properties')
+        distance_measures_action.setStatusTip('Graph diameter, radius, eccentricity and other properties')
+        menu_algorithms.addAction(distance_measures_action)
         
+        grade_max_action = QAction('Maximum Dregree',self ,checkable=True)
+        grade_max_action.triggered.connect(self.state_check_4)
+        grade_max_action.setToolTip('Graph Maximum dregree')
+        grade_max_action.setStatusTip('Graph Maximum dregree')
+        menu_algorithms.addAction(grade_max_action)
+        
+        kmeans_action = QAction(QIcon('Icons/kmeans.png'), 'K-means', self)
+        kmeans_action.setToolTip('K-means')
+        kmeans_action.setStatusTip('K-means')
+        kmeans_action.triggered.connect(self.kmeans_button)
+        menu_clusters.addAction(kmeans_action)
         #################################################################
         ##     Definición de elementos contenedores
         #################################################################
@@ -260,11 +288,9 @@ class Principal(QMainWindow):
         self.list1.addItem("Kamada kawai layout")
         
         self.list2 = QComboBox()
-        self.list2.addItem("100%")
-        self.list2.addItem("10%")
-        self.list2.addItem("7%")
-        self.list2.addItem("5%")
-        self.list2.addItem("1%")
+        frec = ["100%","10%" ,"7%" ,"5%" ,'4%', "3%", "1%" ]
+        self.list2.addItems(frec)
+
         
         self.list3 = QComboBox()
         self.list3.currentIndexChanged.connect(self.plots)
@@ -303,16 +329,16 @@ class Principal(QMainWindow):
         graficos.addWidget(self.plot1)
         #################################################################
         ##     Colocar elementos en layout botones
-        #################################################################
-        
+        #################################################################        
         results.addRow(self.lbl_num_files)
         results.addRow(lbl_file,self.list3)
         results.addRow(lbl2, self.list2)
         results.addRow(lbl_lista1,self.list1)
         results.addRow(lbl_check1,self.check1)
         results.addRow(lbl_time,self.lbl_time)
+
+        results.addRow(self.btn1)
         botones.addLayout(results) 
-        botones.addWidget(self.btn1)
         #################################################################
         ##     Colocar elementos en la ventana
         #################################################################
