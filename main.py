@@ -17,7 +17,7 @@ from modules.Plot import Plot
 from modules.Cliques import Cliques
 from modules.Distance_Measures import Distance_measures
 from modules.Chordal import Chordal
-from modules.Grade_Max import Grade_Max
+from modules.Degree import Degree
 
 import sys
 import os
@@ -70,37 +70,27 @@ class Principal(QMainWindow):
        
         if(self.int_1 == 1):
             Cliques(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
-     
         if(self.int_2 == 1):
             Distance_measures(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
-        
         if(self.int_3 == 1):
             Chordal(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
-        
         if(self.int_4 == 1):
-            Grade_Max(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
-            
+            Degree(P = visibility_graphs, tipo ='visibility graph', ruta = names[0])
         if(self.int_max_clique == 1):
             if(self.int_1 == 1):
                 Cliques(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
-         
             if(self.int_2 == 1):
                 Distance_measures(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
-            
             if(self.int_3 == 1):
                 Chordal(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
-            
             if(self.int_4 == 1):
-                Grade_Max(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
-            
+                Degree(P = maxclique_graphs, tipo ='maxclique graph', ruta = names[0])
             
         self.dialogo_done = Dialog('Done!',self.resource_path('Icons/done.png'))
         self.dialogo_done.show()
         tiempo_fin = time()
         tiempo_total = modf(round(tiempo_fin - tiempo_ini,3)/60)
-        self.lbl_time.setText(str(int(tiempo_total[1]))+':'+str(int(tiempo_total[0]*60)))
-#        self.txt_clusters.setEnabled(True)
-    
+        self.lbl_time.setText(str(int(tiempo_total[1]))+':'+str(int(tiempo_total[0]*60)))    
 #%%
     def cargarSenial(self):
         self.aux = False
@@ -187,8 +177,7 @@ class Principal(QMainWindow):
         #################################################################
         self.rutas = ''
         self.nombreSenial=''
-        self.x=[]
-        self.y=[]
+        self.y = []
         self.int_1    = 0
         self.int_2    = 0
         self.int_3    = 0

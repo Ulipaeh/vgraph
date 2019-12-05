@@ -73,6 +73,18 @@ class CutSignals(QMainWindow):
         self.final  = []
         self.seg_pos.clear()
         self.seg_pos.addItem('')
+        def group_consecutives(vals, step=1):
+            run = []
+            result = [run]
+            expect = None
+            for v in vals:
+                if (v == expect) or (expect is None):
+                    run.append(v)
+                else:
+                    run = [v]
+                    result.append(run)
+                expect = v + step
+            return result
         if(len(self.txt_umbral.text())!=0 and len(self.txt_basal.text())!=0 and len(self.txt_ancho.text())!=0 
            and len(self.txt_separacion.text())!=0):
             umbral     = float(self.txt_umbral.text())
@@ -85,27 +97,69 @@ class CutSignals(QMainWindow):
             for i in range(len(y)):
                 if(y[i]>umbral):
                     loc_x.append(i) 
+                    
+            pico_range = group_consecutives(loc_x)        
+            
+            loc_x1 = []
+            for i in range(len(pico_range)):
+                aux  = pico_range[i]
+                pico = list(y[aux])
+                pos_aux = pico.index(max(pico))
+                loc_x1.append(aux[pos_aux])
+                    
             loc = []
-            for i in range(len(loc_x)):
-                if(i<len(loc_x)-1):
-                    if(loc_x[i+1]-loc_x[i]>ancho):
-                        loc.append(loc_x[i])
+            loc.append(loc_x[0])
+            for i in range(1,len(loc_x1)):
+                if(loc_x1[i]-loc_x1[i-1]>ancho):
+                    loc.append(loc_x1[i])
+                    
             ini = []
             end = []        
             for i in range(len(loc)):
-                x_ini   = arange(loc[i]-separacion,loc[i])
-                y_ini   = y[x_ini]
-                
-                x_end   = arange(loc[i],loc[i] + separacion)
-                y_end   = y[x_end]
-                
-                donde_ini = where(y_ini <= min(y_ini) + basal)[0]
-                donde_fin = where(y_end <= min (y_ini) + basal)[0]
-                
-                if(len(donde_fin)!=0 ):
-                    ini.append(x_ini[max(donde_ini)])
-                    end.append(x_end[min(donde_fin)]) 
-                         
+                if(loc[0]>2*separacion ):
+                    x_ini   = arange(loc[i]-separacion,loc[i])
+                    y_ini   = y[x_ini]
+                    
+                    x_end   = arange(loc[i],loc[i] + separacion)
+                    y_end   = y[x_end]
+                    
+                    donde_ini = where(y_ini <= min(y_ini) + basal)[0]
+                    donde_fin = where(y_end <= min (y_ini) + basal)[0]
+                                
+                    if(len(donde_fin)!=0 and len(donde_ini)!=0 ):
+                        ini.append(x_ini[max(donde_ini)])
+                        end.append(x_end[min(donde_fin)]) 
+                elif(loc[0]<separacion):
+                    x_ini   = arange(0,loc[i])
+                    y_ini   = y[x_ini]
+                    
+                    x_end   = arange(loc[i],loc[i] + separacion)
+                    y_end   = y[x_end]
+                    
+                    donde_ini = where(y_ini <= min(y_ini) + basal)[0]
+                    donde_fin = where(y_end <= min (y_ini) + basal)[0]
+                                
+                    if(len(donde_fin)!=0 and len(donde_ini)!=0 ):
+                        ini.append(x_ini[max(donde_ini)])
+                        end.append(x_end[min(donde_fin)]) 
+                        
+                elif(len(y) - (loc[len(loc)-1] + separacion) < 0 ):
+                    x_ini   = arange(loc[i]-separacion,loc[i])
+                    y_ini   = y[x_ini]
+                    
+                    x_end   = arange(loc[i],len(y))
+                    y_end   = y[x_end]
+                    
+                    donde_ini = where(y_ini <= min(y_ini) + basal)[0]
+                    donde_fin = where(y_end <= min (y_ini) + basal)[0]
+                                
+                    if(len(donde_fin)!=0):
+                        ini.append(x_ini[max(donde_ini)])
+                        end.append(x_end[min(donde_fin)]) 
+            ini = list(set(ini))
+            end = list(set(end))
+            ini = list(sorted(ini))
+            end = list(sorted(end))
             names = str.split(self.nombreSenial[0],self.nombre)
             nam   = str.split(self.nombre,'.') 
     
@@ -137,21 +191,23 @@ class CutSignals(QMainWindow):
         self.aux2 = True
 #%%      
     def addInterval(self):
+        duracion = []
+        contador = 0
         if(len(self.txtns.text())==0):
             self.dialogo_error = Dialog('A segment number must be type() = int ','Icons\error.png')
             self.dialogo_error.show()
         else:
-            self.contador  = int(self.txtns.text())
+            contador  = int(self.txtns.text())
             regionSelected = self.lr.getRegion()
             ini = int(regionSelected[0])
             fin = int(regionSelected[1])
-            self.duracion.append(self.y[ini:fin])
-            self.duracion = transpose(self.duracion)
-            df = pd.DataFrame(self.duracion)
+            duracion.append(self.y[ini:fin])
+            duracion = transpose(duracion)
+            df = pd.DataFrame(duracion)
             names = str.split(self.nombreSenial[0],self.nombre)
             nam   = str.split(self.nombre,'.')
-            df.to_csv(names[0]+nam[0]+'_seg_'+str(self.contador)+'.txt',index=False,sep='\t', header = None, mode = 'w') 
-            self.duracion = []        
+            df.to_csv(names[0]+nam[0]+'_seg_'+str(contador)+'.txt',index=False,sep='\t', header = None, mode = 'w') 
+            duracion = []        
             linea1= pg.InfiniteLine(pos= ini, angle=90, movable=False)
             linea2= pg.InfiniteLine(pos= fin, angle=90, movable=False)
             self.plot1.addItem(linea1)
@@ -163,22 +219,17 @@ class CutSignals(QMainWindow):
         self.setWindowTitle('Cut Signal')
         self.setWindowIcon(QIcon("Icons\cut.png"))
         self.resize(1225, 700)
-        contain=QSplitter(Qt.Horizontal)
         #################################################################
         ##     Definición de variables globales
         #################################################################
-        self.ruta = None
         self.nombreSenial = ''
         self.y = []
-        self.duracion = []
-        self.contador = 0
-        self.ini = 0 
-        self.fin = 0
         self.aux = 0
         self.aux2 = False
         #################################################################
         ##     Definición de elementos contenedores
         #################################################################
+        contain = QSplitter(Qt.Horizontal)
         graficos = QVBoxLayout()
         botones  = QVBoxLayout()
         results2 = QFormLayout()

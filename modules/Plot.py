@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def Plot(P,ruta,style,label):
-    
+    DPI = 150
     names=str.split(ruta,"/")
     t=len(names)
     nombre= names[t-1]
@@ -22,5 +22,5 @@ def Plot(P,ruta,style,label):
         draw(P, pos=circular_layout(P), node_color='r', edge_color='b',with_labels=True)
     elif(style==2):
         draw(P, pos = kamada_kawai_layout(P))
-    plt.savefig(RUTA+nam[0]+label,dpi=300)
+    plt.savefig(RUTA+nam[0]+label,dpi=DPI)
     plt.close()

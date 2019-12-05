@@ -13,6 +13,7 @@ def is_visible (y ,a ,b ):
     return isit
 
 def visibility_graph(ruta,frec):
+    DPI = 150
     names = str.split(ruta,"/")
     t = len(names)
     nombre = names[t-1]
@@ -35,7 +36,7 @@ def visibility_graph(ruta,frec):
     plt.figure()
     plt.grid(True)
     plt.plot(y)
-    plt.savefig(RUTA + nam[0]+'.png',dpi=300)
+    plt.savefig(RUTA + nam[0]+'.png', dpi = DPI)
     plt.close()
     
         
@@ -66,7 +67,7 @@ def visibility_graph(ruta,frec):
     plt.figure()
     plt.grid(True)
     plt.bar(range (len( vals )),vals ,width =0.2 ,align ="center")
-    plt.savefig(RUTA + nam[0]+'_bar_graph.png',dpi=300)
+    plt.savefig(RUTA + nam[0]+'_bar_graph.png', dpi = DPI)
     plt.close()
 
     eds = []
