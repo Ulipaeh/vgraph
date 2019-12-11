@@ -5,8 +5,9 @@ Created on Mon Aug 12 20:24:20 2019
 @author: Ulises
 """
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import (QMainWindow, QFileDialog, QLabel, QToolBar, QAction, QApplication, QLineEdit, QCheckBox ,
-                              QWidget, QComboBox, QSplitter, QPushButton, QVBoxLayout, QStatusBar, QFormLayout, QMenuBar)
+from PyQt5.QtWidgets import (QMainWindow, QFileDialog, QLabel, QToolBar, QAction, QApplication, 
+                             QLineEdit, QCheckBox , QWidget, QComboBox, QSplitter, QPushButton, 
+                             QVBoxLayout, QStatusBar, QFormLayout, QMenuBar, QGroupBox)
 from PyQt5.QtCore import Qt
 from modules.Dialog import Dialog
 from modules.cutSignals import CutSignals
@@ -27,7 +28,6 @@ from pandas import read_csv
 from networkx import make_max_clique_graph
 import pyqtgraph as pg
 from time import time
-
 
 class Principal(QMainWindow):
     
@@ -258,18 +258,22 @@ class Principal(QMainWindow):
         graficos = QVBoxLayout()
         botones = QVBoxLayout()
         results  = QFormLayout()
+        settings_layout = QVBoxLayout()
         #################################################################
         ##     Elementos del layout botones
         #################################################################
+        font_size_labels = "font-size: 18px"
+        group_box_settings = QGroupBox("Settings")
+        
         lbl2 = QLabel("Sampling frequency:")
-        lbl2.setStyleSheet("font-size: 20px")
+        lbl2.setStyleSheet(font_size_labels)
         
         self.txt1 = QLineEdit("")
         self.txt1.setEnabled(True)
-        self.txt1.setStyleSheet("font-size: 20px")
+        self.txt1.setStyleSheet(font_size_labels)
                 
         lbl_lista1 = QLabel("Graph layout:")
-        lbl_lista1.setStyleSheet("font-size: 20px")
+        lbl_lista1.setStyleSheet(font_size_labels)
         
         self.list1 = QComboBox()
         self.list1.addItem("None")
@@ -280,31 +284,30 @@ class Principal(QMainWindow):
         frec = ["100%","10%" ,"7%" ,"5%" ,'4%', "3%", "1%" ]
         self.list2.addItems(frec)
 
-        
         self.list3 = QComboBox()
         self.list3.currentIndexChanged.connect(self.plots)
         
         lbl_check1 = QLabel("Make maxclique graph")
-        lbl_check1.setStyleSheet("font-size: 20px")
+        lbl_check1.setStyleSheet(font_size_labels)
         
         self.check1 = QCheckBox()
         self.check1.stateChanged.connect(self.state_check_max_clique) 
         
         self.lbl_num_files = QLabel("Files loaded: ")
-        self.lbl_num_files.setStyleSheet("font-size: 20px")
+        self.lbl_num_files.setStyleSheet(font_size_labels)
         
         lbl_file = QLabel("File: ")
-        lbl_file.setStyleSheet("font-size: 20px")
+        lbl_file.setStyleSheet(font_size_labels)
         
         lbl_time = QLabel("Exe. time: ")
-        lbl_time.setStyleSheet("font-size: 20px")
+        lbl_time.setStyleSheet(font_size_labels)
         
         self.lbl_time = QLabel()
-        self.lbl_time.setStyleSheet("font-size: 20px")
+        self.lbl_time.setStyleSheet(font_size_labels)
         
         self.btn1 = QPushButton('Visibility graph')
         self.btn1.clicked.connect(self.visibility_graph_button)
-        self.btn1.setStyleSheet("font-size: 20px")
+        self.btn1.setStyleSheet(font_size_labels)
         self.btn1.setEnabled(False)
         #################################################################
         ##     Elementos del layout graficos
@@ -325,9 +328,9 @@ class Principal(QMainWindow):
         results.addRow(lbl_lista1,self.list1)
         results.addRow(lbl_check1,self.check1)
         results.addRow(lbl_time,self.lbl_time)
-
-        results.addRow(self.btn1)
-        botones.addLayout(results) 
+        group_box_settings.setLayout(results)
+        botones.addWidget(group_box_settings)
+        botones.addWidget(self.btn1)
         #################################################################
         ##     Colocar elementos en la ventana
         #################################################################
