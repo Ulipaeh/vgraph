@@ -170,7 +170,7 @@ class Principal(QMainWindow):
         pg.setConfigOption('background', 'w')
         self.setWindowTitle('NetWX')
         self.setWindowIcon(QIcon('Icons\icono2.png'))
-        self.resize(1225, 700)
+        self.resize(1000, 600)
         contain=QSplitter(Qt.Horizontal)
         #################################################################
         ##     Definición de variables globales
@@ -256,9 +256,8 @@ class Principal(QMainWindow):
         ##     Definición de elementos contenedores
         #################################################################
         graficos = QVBoxLayout()
-        botones = QVBoxLayout()
+        botones  = QVBoxLayout()
         results  = QFormLayout()
-        settings_layout = QVBoxLayout()
         #################################################################
         ##     Elementos del layout botones
         #################################################################

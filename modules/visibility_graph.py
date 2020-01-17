@@ -18,11 +18,11 @@ def visibility_graph(ruta,frec):
     t = len(names)
     nombre = names[t-1]
     data = np.asarray(pd.read_csv(ruta,sep='\t', header=None))
-#    if(min(data)[0]<=0):
-#        funcion = np.vectorize(lambda x: x + (-1)*min(data)[0])
-#        y = funcion(data)    
-#    else:
-#        y = data
+    if(min(data)[0]<=0):
+        funcion = np.vectorize(lambda x: x + (-1)*min(data)[0])
+        y = funcion(data)    
+    else:
+        y = data
     
     names = str.split(ruta,nombre)
     nam   = str.split(nombre,'.')
@@ -30,8 +30,6 @@ def visibility_graph(ruta,frec):
     RUTA =  names[0] + '/NetWX/images/'
     path = Path(RUTA)
     path.mkdir(parents = True,exist_ok = True)
-
-    y = data
     
     plt.figure()
     plt.grid(True)
