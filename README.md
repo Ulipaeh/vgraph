@@ -24,7 +24,7 @@ pip install sklearn    # enter
 
 ## Use Vgraph ⌨️
 
-1. Load sigal(s) in format 1 column .txt or .csv:
+1. Load signal(s) in format 1 column .txt or .csv:
 
 <img width="497" alt="Abrir" src="https://user-images.githubusercontent.com/53945790/76441566-3fc69300-6385-11ea-9735-59488d43673f.png">
 
@@ -37,7 +37,7 @@ pip install sklearn    # enter
 <img width="655" alt="Localizacion" src="https://user-images.githubusercontent.com/53945790/76443160-9df47580-6387-11ea-990f-d78c5f14cdf8.PNG">
 
 ## K-means clustering 🛠️
-1. This interface can k-means clustering with graphs parameters:
+1. This interface can perform k-means clustering with graphs parameters:
 
 <img width="499" alt="Kmeans1" src="https://user-images.githubusercontent.com/53945790/76446804-350ffc00-638d-11ea-9f16-56439ab9b0e0.png">
 
