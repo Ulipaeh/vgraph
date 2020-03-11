@@ -24,9 +24,7 @@ pip install sklearn    # enter
 ## Run program ⚙️
 
 run python main.py in CMD:
-```
-python main.py      # enter
-```
+<img width="416" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76440209-1efd3e00-6383-11ea-8984-ceeb74ca9d27.PNG">
 ### Use Vgraph ⌨️
 
 _Explica que verifican estas pruebas y por qué_
