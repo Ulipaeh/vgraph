@@ -2,11 +2,7 @@
 
 A graphical interface to visibility graph
 
-## Comenzando 🚀
-
-_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
-
-### Install 🔧
+## Install 🔧
 
 1. Install python 3.7 (download link https://www.python.org/downloads/release/python-370/ ), mark "Add to path" option, add click next  
 _Dí cómo será ese paso_
@@ -21,13 +17,16 @@ pip install pyqtgraph  # enter
 pip install networkx   # enter
 pip install sklearn    # enter
 ```
+<img width="360" alt="librerias" src="https://user-images.githubusercontent.com/53945790/76443786-98e3f600-6388-11ea-88d6-8395e908a4a7.PNG">
+
+
 ## Run program ⚙️
 1. Locate (with cd comand) interface folder and run python main.py in CMD:
 
 <img width="413" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76440640-c0848f80-6383-11ea-9521-b4ed3ad08c28.PNG">
 
 
-### Use Vgraph ⌨️
+## Use Vgraph ⌨️
 
 1. Load sigal(s) in format 1 column .txt or .csv:
 
@@ -40,8 +39,6 @@ pip install sklearn    # enter
 3. At the end of the process, the files are automatically saved in the folder of the loaded signal:
 
 <img width="655" alt="Localizacion" src="https://user-images.githubusercontent.com/53945790/76443160-9df47580-6387-11ea-990f-d78c5f14cdf8.PNG">
-
-
 
 ## Construido con 🛠️
 
