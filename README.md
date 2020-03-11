@@ -45,7 +45,7 @@ pip install sklearn    # enter
 
 <img width="717" alt="Kmeans2" src="https://user-images.githubusercontent.com/53945790/76447094-aea7ea00-638d-11ea-84dd-b461e161fb59.png">
 
-3. The clasification image are automatically saved in the folder of the loaded parameters:
+3. The clasification image is automatically saved in the folder of the loaded parameters:
 
 <img width="582" alt="Kmeans3" src="https://user-images.githubusercontent.com/53945790/76447359-2b3ac880-638e-11ea-8df6-e8f1620a525c.png">
 
