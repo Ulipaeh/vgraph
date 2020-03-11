@@ -30,11 +30,15 @@ run python main.py in CMD:
 
 ### Use Vgraph ⌨️
 
-_Explica que verifican estas pruebas y por qué_
+1. Load sigal(s) in format 1 column .txt or .csv:
 
-```
-Da un ejemplo
-```
+<img width="497" alt="Abrir" src="https://user-images.githubusercontent.com/53945790/76441566-3fc69300-6385-11ea-9735-59488d43673f.png">
+
+2. select the parameters to create visibility graph and maxclique graph: 
+
+<img width="413" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76441713-7bf9f380-6385-11ea-8384-6a5c6ad8e452.PNG">
+
+
 ## Construido con 🛠️
 
 _Menciona las herramientas que utilizaste para crear tu proyecto_
