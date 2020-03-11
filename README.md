@@ -39,7 +39,8 @@ pip install sklearn    # enter
 
 3. At the end of the process, the files are automatically saved in the folder of the loaded signal:
 
-<img width="646" alt="Localizacion" src="https://user-images.githubusercontent.com/53945790/76442780-0b53d680-6387-11ea-80f6-00186a334e58.PNG">
+<img width="655" alt="Localizacion" src="https://user-images.githubusercontent.com/53945790/76443160-9df47580-6387-11ea-990f-d78c5f14cdf8.PNG">
+
 
 
 ## Construido con 🛠️
