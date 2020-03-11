@@ -22,9 +22,12 @@ pip install networkx   # enter
 pip install sklearn    # enter
 ```
 ## Run program ⚙️
-
 run python main.py in CMD:
-<img width="416" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76440209-1efd3e00-6383-11ea-8984-ceeb74ca9d27.PNG">
+
+
+<img width="413" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76440640-c0848f80-6383-11ea-9521-b4ed3ad08c28.PNG">
+
+
 ### Use Vgraph ⌨️
 
 _Explica que verifican estas pruebas y por qué_
