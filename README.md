@@ -33,10 +33,13 @@ pip install sklearn    # enter
 
 <img width="497" alt="Abrir" src="https://user-images.githubusercontent.com/53945790/76441566-3fc69300-6385-11ea-9735-59488d43673f.png">
 
-2. Select the parameters to create visibility graph and maxclique graph: 
+2. Select the parameters to create visibility graph and maxclique graph and click in "visibility graph" button: 
 
 <img width="500" alt="Parametros" src="https://user-images.githubusercontent.com/53945790/76441876-b5326380-6385-11ea-9abc-4fa5763a37c5.png">
 
+3. At the end of the process, the files are automatically saved in the folder of the loaded signal:
+
+<img width="446" alt="Localizacion" src="https://user-images.githubusercontent.com/53945790/76442439-92547f00-6386-11ea-99fe-fd53c3ed152e.PNG">
 
 ## Construido con 🛠️
 
