@@ -8,12 +8,12 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 
 ### Install 🔧
 
-Install python 3.7 (download link https://www.python.org/downloads/release/python-370/ ), mark "Add to path" option, add click next  
+1. Install python 3.7 (download link https://www.python.org/downloads/release/python-370/ ), mark "Add to path" option, add click next  
 _Dí cómo será ese paso_
 ```
 Da un ejemplo
 ```
-Open CMD or Terminal and install packages: numpy, pandas, networkx, sklearn, pyqtgraph and pyqt5, with pip install comand:
+2.Open CMD or Terminal and install packages: numpy, pandas, networkx, sklearn, pyqtgraph and pyqt5, with pip install comand:
 ```
 pip install numpy      # enter
 pip install pandas     # enter
@@ -22,8 +22,7 @@ pip install networkx   # enter
 pip install sklearn    # enter
 ```
 ## Run program ⚙️
-run python main.py in CMD:
-
+1. Locate (with cd comand) interface folder and run python main.py in CMD:
 
 <img width="413" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76440640-c0848f80-6383-11ea-9521-b4ed3ad08c28.PNG">
 
@@ -34,9 +33,9 @@ run python main.py in CMD:
 
 <img width="497" alt="Abrir" src="https://user-images.githubusercontent.com/53945790/76441566-3fc69300-6385-11ea-9735-59488d43673f.png">
 
-2. select the parameters to create visibility graph and maxclique graph: 
+2. Select the parameters to create visibility graph and maxclique graph: 
 
-<img width="413" alt="Ejecutar" src="https://user-images.githubusercontent.com/53945790/76441713-7bf9f380-6385-11ea-8384-6a5c6ad8e452.PNG">
+<img width="500" alt="Parametros" src="https://user-images.githubusercontent.com/53945790/76441876-b5326380-6385-11ea-9abc-4fa5763a37c5.png">
 
 
 ## Construido con 🛠️
