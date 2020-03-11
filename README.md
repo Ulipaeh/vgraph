@@ -5,10 +5,6 @@ A graphical interface to visibility graph
 ## Install 🔧
 
 1. Install python 3.7 (download link https://www.python.org/downloads/release/python-370/ ), mark "Add to path" option, add click next  
-_Dí cómo será ese paso_
-```
-Da un ejemplo
-```
 2.Open CMD or Terminal and install packages: numpy, pandas, networkx, sklearn, pyqtgraph and pyqt5, with pip install comand:
 ```
 pip install numpy      # enter
@@ -40,17 +36,16 @@ pip install sklearn    # enter
 
 <img width="655" alt="Localizacion" src="https://user-images.githubusercontent.com/53945790/76443160-9df47580-6387-11ea-990f-d78c5f14cdf8.PNG">
 
-## Construido con 🛠️
+## K-means clustering 🛠️
+1. This interface can k-means clustering with graphs parameters:
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
+<img width="499" alt="Kmeans1" src="https://user-images.githubusercontent.com/53945790/76446804-350ffc00-638d-11ea-9f16-56439ab9b0e0.png">
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
+2. Load 2 files (parameters) to k-means clustering, set axis labels to graph and number of clusters and click "k-means" button:
 
-## Autores ✒️
+<img width="717" alt="Kmeans2" src="https://user-images.githubusercontent.com/53945790/76447094-aea7ea00-638d-11ea-84dd-b461e161fb59.png">
 
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
+3. The clasification image are automatically saved in the folder of the loaded parameters:
 
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
+<img width="582" alt="Kmeans3" src="https://user-images.githubusercontent.com/53945790/76447359-2b3ac880-638e-11ea-8df6-e8f1620a525c.png">
+
