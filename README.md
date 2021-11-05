@@ -4,6 +4,7 @@ A graphical interface to visibility graph
 
 ## Cite
 Please cite this work as: 
+
 Rodriguez-Torres EE, Paredes-Hernandez U, Vazquez-Mendoza E, Tetlalmatzi-Montiel M, Morgado-Valle C, Beltran-Parrazal L and Villarroel-Flores R (2020) Characterization and Classification of Electrophysiological Signals Represented as Visibility Graphs Using the Maxclique Graph. Front. Bioeng. Biotechnol. 8:324. doi: 10.3389/fbioe.2020.00324
 
 
